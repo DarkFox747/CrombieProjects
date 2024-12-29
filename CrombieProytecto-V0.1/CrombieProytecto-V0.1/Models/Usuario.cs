@@ -2,5 +2,6 @@
 {
     public class Usuario
     {
+        int Id { get; set; }
     }
 }
