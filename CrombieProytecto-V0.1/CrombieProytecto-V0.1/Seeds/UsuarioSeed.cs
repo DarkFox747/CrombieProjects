@@ -8,14 +8,14 @@ namespace CrombieProytecto_V0._1.Seeds
     {
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
-            builder.HasData(
+            /*builder.HasData(
                 new Usuario
                 {
                     Id = 1,
                     Nombre = "Admin",
                     Email = "asd@gmail.com",
                     Password = "123"
-                } );
+                } );*/
         }
     }
 }
