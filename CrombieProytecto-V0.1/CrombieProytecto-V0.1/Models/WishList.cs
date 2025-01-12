@@ -1,11 +1,10 @@
 ﻿namespace CrombieProytecto_V0._1.Models
 {
-    public class WishList
+    public class WishList: BaseEntity
     {
-        public int Id { get; set; } 
-
-        public int IdProducto { get; set; } 
-
-        public int IdUsuario { get; set; }  
+        public required string Nombre { get; set; }
+        public int IdUsuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        public virtual ICollection<WishListProductos>? Productos { get; set; }
     }
 }

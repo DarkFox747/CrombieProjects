@@ -2,18 +2,21 @@
 
 namespace CrombieProytecto_V0._1.Models
 {
-    public class Usuario
+    public class Usuario: BaseEntity
+
     {
-        [Key]
-        public int Id { get; set; }
+        public required string Nombre { get; set; }
+        public required string Username { get; set; }
+        public string? Email { get; set; }
+        public required string PasswordHash { get; set; }
+        public string Salt { get; set; }
+        public UserRole Roles { get; set; }
+        public virtual ICollection<WishList>? WishLists { get; set; }
+    }
 
-        [MaxLength(50)]
-        public string Nombre { get; set; }
-
-        [MaxLength(100)]
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-
+    public enum UserRole
+    {
+        Regular,
+        Admin
     }
 }
