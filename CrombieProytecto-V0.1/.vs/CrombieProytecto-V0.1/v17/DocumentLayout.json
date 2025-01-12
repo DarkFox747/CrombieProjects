@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\migrations\\20250112203804_testcambios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\migrations\\20250112203804_testcambios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\seeds\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\seeds\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\seeds\\usuarioseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\seeds\\usuarioseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\context\\proyectcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\context\\proyectcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\migrations\\20241231201428_firstmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,32 +39,16 @@
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\controllers\\wishlistscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\context\\proyectcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\context\\proyectcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\models\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\models\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\seeds\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\seeds\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\models\\wishlistproductos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,10 +79,6 @@
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\models\\dtos\\crearproductodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\seeds\\usuarioseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\seeds\\usuarioseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|c:\\users\\diegote\\desktop\\crombi\\crombieproytecto-v0.1\\crombieproytecto-v0.1\\models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69035800-1D24-4C5C-8FFC-6DD3E17B5C6F}|CrombieProytecto-V0.1\\CrombieProytecto-V0.1.csproj|solutionrelative:crombieproytecto-v0.1\\models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -94,37 +94,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 20,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20250112203804_TestCambios.cs",
-              "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20250112203804_TestCambios.cs",
-              "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Migrations\\20250112203804_TestCambios.cs",
-              "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20250112203804_TestCambios.cs",
-              "RelativeToolTip": "CrombieProytecto-V0.1\\Migrations\\20250112203804_TestCambios.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAgwBgAAAAiAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "20250112230014_TestFullMigration.cs",
+              "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs",
+              "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs",
+              "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs",
+              "RelativeToolTip": "CrombieProytecto-V0.1\\Migrations\\20250112230014_TestFullMigration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T20:38:04.527Z",
+              "WhenOpened": "2025-01-12T23:00:14.181Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "DatabaseSeeder.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Seeds\\DatabaseSeeder.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Seeds\\DatabaseSeeder.cs",
               "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Seeds\\DatabaseSeeder.cs",
               "RelativeToolTip": "CrombieProytecto-V0.1\\Seeds\\DatabaseSeeder.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAgwF0AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwCQAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-12T20:24:18.836Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "WishListProductos.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\WishListProductos.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\WishListProductos.cs",
@@ -137,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "WishList.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\WishList.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\WishList.cs",
@@ -150,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "WishListsController.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Controllers\\WishListsController.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Controllers\\WishListsController.cs",
@@ -163,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Service\\AuthService.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Service\\AuthService.cs",
@@ -175,12 +179,8 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "UsuariosController.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Controllers\\UsuariosController.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Controllers\\UsuariosController.cs",
@@ -193,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ProductoController.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Controllers\\ProductoController.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Controllers\\ProductoController.cs",
@@ -206,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "CrearProductoDto.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\dtos\\CrearProductoDto.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\dtos\\CrearProductoDto.cs",
@@ -232,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\BaseEntity.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\BaseEntity.cs",
@@ -245,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Categoria.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\Categoria.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\Categoria.cs",
@@ -258,7 +258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "HistorialCompras.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\HistorialCompras.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\HistorialCompras.cs",
@@ -271,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "HistorialPrecio.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Models\\HistorialPrecio.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Models\\HistorialPrecio.cs",
@@ -284,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "20241231202759_SecondMigration.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20241231202759_SecondMigration.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Migrations\\20241231202759_SecondMigration.cs",
@@ -297,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 3,
               "Title": "UsuarioSeed.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Seeds\\UsuarioSeed.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Seeds\\UsuarioSeed.cs",
@@ -310,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "20241231201428_FirstMigration.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Migrations\\20241231201428_FirstMigration.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Migrations\\20241231201428_FirstMigration.cs",
@@ -323,39 +323,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Program.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Program.cs",
               "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Program.cs",
               "RelativeToolTip": "CrombieProytecto-V0.1\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE0AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-31T19:30:59.88Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "ProyectContext.cs",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Context\\ProyectContext.cs",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\Context\\ProyectContext.cs",
               "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\Context\\ProyectContext.cs",
               "RelativeToolTip": "CrombieProytecto-V0.1\\Context\\ProyectContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAwwEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-31T19:30:46.214Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\appsettings.json",
               "RelativeDocumentMoniker": "CrombieProytecto-V0.1\\appsettings.json",
               "ToolTip": "C:\\Users\\Diegote\\Desktop\\crombi\\CrombieProytecto-V0.1\\CrombieProytecto-V0.1\\appsettings.json",
               "RelativeToolTip": "CrombieProytecto-V0.1\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-31T19:24:18.173Z",
               "EditorCaption": ""

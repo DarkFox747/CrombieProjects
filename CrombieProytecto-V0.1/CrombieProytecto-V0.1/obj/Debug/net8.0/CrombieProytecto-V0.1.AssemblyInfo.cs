@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CrombieProytecto-V0.1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+311306eb3f9d8e5ef2532741a399fbbc34f198db")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0838389bb6f420b86fa8483d853d0a7704c0d01")]
 [assembly: System.Reflection.AssemblyProductAttribute("CrombieProytecto-V0.1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CrombieProytecto-V0.1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -73,15 +73,14 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ProyectContext>();
-    if (dbContext.Database.CanConnect())
+    try
     {
-        Console.WriteLine("Conexión exitosa a la base de datos.");
-        dbContext.Database.EnsureCreated();
+        await DatabaseSeeder.SeedDatabase(app.Services);
+        Console.WriteLine("Base de datos inicializada con datos de prueba.");
     }
-    else
+    catch (Exception ex)
     {
-        Console.WriteLine("Error: No se pudo conectar a la base de datos.");
+        Console.WriteLine("Error al sembrar la base de datos: " + ex.Message);
     }
 }
 

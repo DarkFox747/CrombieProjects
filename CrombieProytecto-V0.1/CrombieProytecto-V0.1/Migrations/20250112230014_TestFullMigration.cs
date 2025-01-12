@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CrombieProytecto_V0._1.Migrations
 {
     /// <inheritdoc />
-    public partial class TestCambios : Migration
+    public partial class TestFullMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,11 +14,6 @@ namespace CrombieProytecto_V0._1.Migrations
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Usuario",
                 table: "Usuario");
-
-            migrationBuilder.DeleteData(
-                table: "Usuario",
-                keyColumn: "Id",
-                keyValue: 1);
 
             migrationBuilder.RenameTable(
                 name: "Usuario",
@@ -78,6 +73,11 @@ namespace CrombieProytecto_V0._1.Migrations
                 name: "PK_Usuarios",
                 table: "Usuarios",
                 column: "Id");
+
+            migrationBuilder.DeleteData(
+                table: "Usuarios",
+                keyColumn: "Id",
+                keyValue: 1);
 
             migrationBuilder.CreateTable(
                 name: "Productos",

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrombieProytecto_V0._1.Migrations
 {
     [DbContext(typeof(ProyectContext))]
-    [Migration("20250112203804_TestCambios")]
-    partial class TestCambios
+    [Migration("20250112230014_TestFullMigration")]
+    partial class TestFullMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
