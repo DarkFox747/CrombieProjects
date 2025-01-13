@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CrombieProytecto_V0._1.Service;
 using CrombieProytecto_V0._1.Models;
-using CrombieProytecto_V0._1.Context;
 using CrombieProytecto_V0._1.Models.dtos;
-
 
 namespace CrombieProytecto_V0._1.Controllers
 {
@@ -12,13 +9,11 @@ namespace CrombieProytecto_V0._1.Controllers
     [Route("api/[controller]")]
     public class UsuariosController : ControllerBase
     {
-        private readonly IAuthService _authService;
-        private readonly ProyectContext _context;
+        private readonly UsuarioService _usuarioService;
 
-        public UsuariosController(IAuthService authService, ProyectContext context)
+        public UsuariosController(UsuarioService usuarioService)
         {
-            _authService = authService;
-            _context = context;
+            _usuarioService = usuarioService;
         }
 
         [HttpPost("Registro")]
@@ -26,12 +21,7 @@ namespace CrombieProytecto_V0._1.Controllers
         {
             try
             {
-                var usuario = await _authService.RegisterUser(
-                    registerDto.Nombre,
-                    registerDto.Username,
-                    registerDto.Email,
-                    registerDto.Password);
-
+                var usuario = await _usuarioService.RegisterAsync(registerDto);
                 return Ok(usuario);
             }
             catch (Exception ex)
@@ -45,7 +35,7 @@ namespace CrombieProytecto_V0._1.Controllers
         {
             try
             {
-                var token = await _authService.Login(loginDto.Email, loginDto.Password);
+                var token = await _usuarioService.LoginAsync(loginDto);
                 return Ok(new { token });
             }
             catch (Exception ex)

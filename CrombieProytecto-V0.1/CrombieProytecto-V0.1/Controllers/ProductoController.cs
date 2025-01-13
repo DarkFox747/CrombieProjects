@@ -1,6 +1,7 @@
 ﻿using CrombieProytecto_V0._1.Context;
 using CrombieProytecto_V0._1.Models;
 using CrombieProytecto_V0._1.Models.dtos;
+using CrombieProytecto_V0._1.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,96 +14,47 @@ namespace CrombieProytecto_V0._1.Controllers
     [Authorize]
     public class ProductoController : ControllerBase
     {
-     
-        private readonly ProyectContext _context;
+        private readonly ProductoService _productoService;
 
-        public ProductoController(ProyectContext context)
+        public ProductoController(ProductoService productoService)
         {
-            _context = context;
+            _productoService = productoService;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductoDto>>> GetProducts()
         {
-            var producto = await _context.Productos
-                .Select(p => new ProductoDto
-                {
-                    Id = p.Id,
-                    Nombre = p.Nombre,
-                    Descripcion = p.Descripcion,
-                    Precio = p.Precio,
-                    Stock = p.Stock
-                })
-                .ToListAsync();
-
-            return Ok(producto);
+            var productos = await _productoService.GetProductsAsync();
+            return Ok(productos);
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<ProductoDto>> GetProduct(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
-
+            var producto = await _productoService.GetProductAsync(id);
             if (producto == null)
                 return NotFound();
 
-            return new ProductoDto
-            {
-                Id = producto.Id,
-                Nombre = producto.Nombre,
-                Descripcion = producto.Descripcion,
-                Precio = producto.Precio, 
-                Stock = producto.Stock
-            };
+            return Ok(producto);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductoDto>> CreateProduct(CrearProductoDto createDto)
         {
-            var producto = new Producto
-            {
-                Nombre = createDto.Nombre,
-                Descripcion = createDto.Descripcion,
-                Precio = createDto.Precio,
-                Stock = createDto.Stock,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            _context.Productos.Add(producto);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetProduct),
-                new { id = producto.Id },
-                new ProductoDto
-                {
-                    Id = producto.Id,
-                    Nombre = producto.Nombre,
-                    Descripcion = producto.Descripcion,
-                    Precio = producto.Precio,
-                    Stock = producto.Stock
-                });
+            var producto = await _productoService.CreateProductAsync(createDto);
+            return CreatedAtAction(nameof(GetProduct), new { id = producto.Id }, producto);
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, CrearProductoDto updateDto)
         {
-            var producto = await _context.Productos.FindAsync(id);
-
-            if (producto == null)
+            var result = await _productoService.UpdateProductAsync(id, updateDto);
+            if (!result)
                 return NotFound();
-
-            producto.Nombre = updateDto.Nombre;
-            producto.Descripcion = updateDto.Descripcion;
-            producto.Precio = updateDto.Precio;
-            producto.Stock = updateDto.Stock;
-            producto.UpdatedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -111,16 +63,14 @@ namespace CrombieProytecto_V0._1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
-
-            if (producto == null)
+            var result = await _productoService.DeleteProductAsync(id);
+            if (!result)
                 return NotFound();
-
-            _context.Productos.Remove(producto);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
     }
+
+
 }
+

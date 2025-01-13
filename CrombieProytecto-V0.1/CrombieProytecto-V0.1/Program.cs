@@ -64,7 +64,9 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
+builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<WishListService>();
 
 
 var app = builder.Build();
