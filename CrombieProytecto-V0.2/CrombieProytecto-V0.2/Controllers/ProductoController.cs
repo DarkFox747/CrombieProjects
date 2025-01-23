@@ -42,16 +42,32 @@ namespace CrombieProytecto_V0._2.Controllers
 
         [HttpPost("Agregar un producto:")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductoDto>> CreateProduct(CrearProductoDto createDto)
+        public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock)
         {
+            var createDto = new CrearProductoDto
+            {
+                Nombre = nombre,
+                Descripcion = descripcion,
+                Precio = precio,
+                Stock = stock
+            };
+
             var producto = await _productoService.CreateProductAsync(createDto);
             return CreatedAtAction(nameof(GetProduct), new { id = producto.Id }, producto);
         }
 
         [HttpPut("Modificar un producto:{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProduct(int id, CrearProductoDto updateDto)
+        public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock)
         {
+            var updateDto = new CrearProductoDto
+            {
+                Nombre = nombre,
+                Descripcion = descripcion,
+                Precio = precio,
+                Stock = stock
+            };
+
             var result = await _productoService.UpdateProductAsync(id, updateDto);
             if (!result)
                 return NotFound();

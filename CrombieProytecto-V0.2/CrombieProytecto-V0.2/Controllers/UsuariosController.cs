@@ -17,10 +17,18 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         [HttpPost("Registro")]
-        public async Task<ActionResult<Usuario>> Register(RegistroUsuarioDto registerDto)
+        public async Task<ActionResult<Usuario>> Register([FromQuery] string nombre, [FromQuery] string username, [FromQuery] string email, [FromQuery] string password)
         {
             try
             {
+                var registerDto = new RegistroUsuarioDto
+                {
+                    Nombre = nombre,
+                    Username = username,
+                    Email = email,
+                    Password = password
+                };
+
                 var usuario = await _usuarioService.RegisterAsync(registerDto);
                 return Ok(usuario);
             }
@@ -31,10 +39,16 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(LoginDto loginDto)
+        public async Task<ActionResult<string>> Login([FromQuery] string email, [FromQuery] string password)
         {
             try
             {
+                var loginDto = new LoginDto
+                {
+                    Email = email,
+                    Password = password
+                };
+
                 var token = await _usuarioService.LoginAsync(loginDto);
                 return Ok(new { token });
             }
