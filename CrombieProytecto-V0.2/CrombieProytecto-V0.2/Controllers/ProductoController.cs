@@ -42,14 +42,15 @@ namespace CrombieProytecto_V0._2.Controllers
 
         [HttpPost("Agregar un producto:")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock)
+        public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
         {
             var createDto = new CrearProductoDto
             {
                 Nombre = nombre,
                 Descripcion = descripcion,
                 Precio = precio,
-                Stock = stock
+                Stock = stock,
+                URL = url
             };
 
             var producto = await _productoService.CreateProductAsync(createDto);
@@ -58,14 +59,15 @@ namespace CrombieProytecto_V0._2.Controllers
 
         [HttpPut("Modificar un producto:{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock)
+        public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
         {
             var updateDto = new CrearProductoDto
             {
                 Nombre = nombre,
                 Descripcion = descripcion,
                 Precio = precio,
-                Stock = stock
+                Stock = stock,
+                URL = url
             };
 
             var result = await _productoService.UpdateProductAsync(id, updateDto);

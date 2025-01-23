@@ -38,6 +38,7 @@ namespace CrombieProytecto_V0._2.Context
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Precio).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Descripcion).HasMaxLength(1000);
+                entity.Property(entity => entity.URL).HasMaxLength(2048);
             });
 
             // WishList Configuration

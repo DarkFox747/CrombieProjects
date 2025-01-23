@@ -24,7 +24,8 @@ namespace CrombieProytecto_V0._2.Service
                     Nombre = p.Nombre,
                     Descripcion = p.Descripcion,
                     Precio = p.Precio,
-                    Stock = p.Stock
+                    Stock = p.Stock,
+                    URL = p.URL
                 })
                 .ToListAsync();
         }
@@ -41,7 +42,8 @@ namespace CrombieProytecto_V0._2.Service
                 Nombre = producto.Nombre,
                 Descripcion = producto.Descripcion,
                 Precio = producto.Precio,
-                Stock = producto.Stock
+                Stock = producto.Stock,
+                URL = producto.URL
             };
         }
 
@@ -53,6 +55,7 @@ namespace CrombieProytecto_V0._2.Service
                 Descripcion = createDto.Descripcion,
                 Precio = createDto.Precio,
                 Stock = createDto.Stock,
+                URL = createDto.URL,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -65,7 +68,9 @@ namespace CrombieProytecto_V0._2.Service
                 Nombre = producto.Nombre,
                 Descripcion = producto.Descripcion,
                 Precio = producto.Precio,
-                Stock = producto.Stock
+                Stock = producto.Stock,
+                URL = producto.URL
+
             };
         }
 
@@ -79,6 +84,7 @@ namespace CrombieProytecto_V0._2.Service
             producto.Descripcion = updateDto.Descripcion;
             producto.Precio = updateDto.Precio;
             producto.Stock = updateDto.Stock;
+            producto.URL = updateDto.URL;
             producto.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

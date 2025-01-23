@@ -18,5 +18,8 @@ namespace CrombieProytecto_V0._2.Models.dtos
         [Required]
         [Range(0, int.MaxValue)]
         public int Stock { get; set; }
+
+        [StringLength(10000)]
+        public string? URL { get; set; }
     }
 }
