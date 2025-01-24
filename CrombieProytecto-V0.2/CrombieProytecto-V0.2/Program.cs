@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using CrombieProytecto_V0._2.Seeds;
 using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
@@ -75,21 +74,12 @@ builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<WishListService>();
 builder.Services.AddScoped<S3Service>();
+builder.Services.AddScoped<DatabaseSeeder>();
+builder.Services.AddScoped<CategoriaService>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    try
-    {
-        await DatabaseSeeder.SeedDatabase(app.Services);
-        Console.WriteLine("Base de datos inicializada con datos de prueba.");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Error al sembrar la base de datos: " + ex.Message);
-    }
-}
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -100,4 +90,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    await DatabaseSeeder.SeedDatabase(scope.ServiceProvider);
+}
+
 app.Run();

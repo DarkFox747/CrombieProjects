@@ -8,5 +8,6 @@
         public decimal Precio { get; set; }
         public int Stock { get; set; }
         public string? URL { get; set; }
+        public List<CategoriaDto> Categorias { get; set; } = new List<CategoriaDto>();
     }
 }

@@ -12,7 +12,8 @@ namespace CrombieProytecto_V0._2.Context
         public DbSet<Producto> Productos { get; set; }
         public DbSet<WishList> WishList { get; set; }
         public DbSet<WishListProductos> WishlistProductos { get; set; }
-
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<ProductoCategoria> ProductoCategorias { get; set; }
 
         public ProyectContext(DbContextOptions<ProyectContext> options) : base(options) { }
 
@@ -64,8 +65,20 @@ namespace CrombieProytecto_V0._2.Context
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-           
-            
+            //categoria y productocategoria
+            modelBuilder.Entity<ProductoCategoria>()
+             .HasKey(pc => new { pc.ProductoId, pc.CategoriaId });
+
+            modelBuilder.Entity<ProductoCategoria>()
+                .HasOne(pc => pc.Producto)
+                .WithMany(p => p.ProductoCategorias)
+                .HasForeignKey(pc => pc.ProductoId);
+
+            modelBuilder.Entity<ProductoCategoria>()
+                .HasOne(pc => pc.Categoria)
+                .WithMany(c => c.ProductoCategorias)
+                .HasForeignKey(pc => pc.CategoriaId);
+
         }
     }
 }
