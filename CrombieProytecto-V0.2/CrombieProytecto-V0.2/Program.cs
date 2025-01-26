@@ -1,4 +1,5 @@
 using CrombieProytecto_V0._2.Context;
+using CrombieProytecto_V0._2.Seeds;
 using CrombieProytecto_V0._2.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -74,12 +75,10 @@ builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<WishListService>();
 builder.Services.AddScoped<S3Service>();
-builder.Services.AddScoped<DatabaseSeeder>();
+//builder.Services.AddScoped<DatabaseSeeder>();
 builder.Services.AddScoped<CategoriaService>();
 
 var app = builder.Build();
-
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -91,10 +90,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
-    await DatabaseSeeder.SeedDatabase(scope.ServiceProvider);
-}
+    await seeder.SeedDatabase();
+}*/
 
 app.Run();

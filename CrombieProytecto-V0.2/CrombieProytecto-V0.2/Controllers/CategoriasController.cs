@@ -18,6 +18,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CategoriaDto>>> GetCategorias()
         {
             var categorias = await _categoriaService.GetCategoriasAsync();
@@ -25,6 +26,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<CategoriaDto>> GetCategoria(int id)
         {
             var categoria = await _categoriaService.GetCategoriaAsync(id);

@@ -2,21 +2,39 @@
 using CrombieProytecto_V0._2.Models.Entidades;
 using CrombieProytecto_V0._2.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CrombieProytecto_V0._2.Seeds
 {
-    public static class UsuarioSeed
+    public class UsuarioSeed : IEntityTypeConfiguration<Usuario>
     {
-        public static async Task Seed(ProyectContext context, IAuthService authService)
+        public void Configure(EntityTypeBuilder<Usuario> builder)
         {
-            if (await context.Usuarios.AnyAsync()) return;
+            var adminUser = new Usuario
+            {
+                Id = 1,
+                Nombre = "Admin",
+                Username = "admin",
+                Email = "admin@example.com",
+                PasswordHash = "JaMzig+xga1jXEFsOQr6x44WhlYoPp9JNDh9RtmZXcA=", //Admin123!
+                Salt = "36xB6nGSv2SPw0YwjKevhQ==",
+                Roles = UserRole.Admin,
+                CreatedAt = DateTime.UtcNow
+            };
 
-            var adminUser = await authService.RegisterUser("Admin", "admin", "admin@example.com", "Admin123!");
-            adminUser.Roles = UserRole.Admin;
+            var regularUser = new Usuario
+            {
+                Id = 2,
+                Nombre = "User",
+                Username = "user",
+                Email = "user@example.com",
+                PasswordHash = "User123!",
+                Salt = "random_salt",
+                Roles = UserRole.Regular,
+                CreatedAt = DateTime.UtcNow
+            };
 
-            var regularUser = await authService.RegisterUser("User", "user", "user@example.com", "User123!");
-
-            await context.SaveChangesAsync();
+            builder.HasData(adminUser, regularUser);
         }
     }
 }

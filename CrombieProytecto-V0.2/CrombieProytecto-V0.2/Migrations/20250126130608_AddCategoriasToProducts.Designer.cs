@@ -4,6 +4,7 @@ using CrombieProytecto_V0._2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrombieProytecto_V0._2.Migrations
 {
     [DbContext(typeof(ProyectContext))]
-    partial class ProyectContextModelSnapshot : ModelSnapshot
+    [Migration("20250126130608_AddCategoriasToProducts")]
+    partial class AddCategoriasToProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,32 +46,6 @@ namespace CrombieProytecto_V0._2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4479),
-                            Nombre = "Electrónica"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4482),
-                            Nombre = "Ropa"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4483),
-                            Nombre = "Hogar"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4484),
-                            Nombre = "Juguetes"
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.Producto", b =>
@@ -107,53 +84,6 @@ namespace CrombieProytecto_V0._2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Productos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4386),
-                            Descripcion = "Laptop gaming de alta gama con RTX 3080",
-                            Nombre = "Laptop Gaming Pro",
-                            Precio = 1499.99m,
-                            Stock = 10
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4390),
-                            Descripcion = "Smartphone de última generación con cámara 108MP",
-                            Nombre = "Smartphone Ultra",
-                            Precio = 899.99m,
-                            Stock = 15
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4392),
-                            Descripcion = "Auriculares bluetooth con cancelación de ruido",
-                            Nombre = "Auriculares Wireless",
-                            Precio = 199.99m,
-                            Stock = 30
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4393),
-                            Descripcion = "Monitor gaming 4K 144Hz",
-                            Nombre = "Monitor 4K",
-                            Precio = 499.99m,
-                            Stock = 8
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4395),
-                            Descripcion = "Teclado gaming con switches Cherry MX",
-                            Nombre = "Teclado Mecánico RGB",
-                            Precio = 129.99m,
-                            Stock = 20
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.ProductoCategoria", b =>
@@ -169,48 +99,6 @@ namespace CrombieProytecto_V0._2.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("ProductoCategorias");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductoId = 1,
-                            CategoriaId = 1
-                        },
-                        new
-                        {
-                            ProductoId = 2,
-                            CategoriaId = 1
-                        },
-                        new
-                        {
-                            ProductoId = 3,
-                            CategoriaId = 1
-                        },
-                        new
-                        {
-                            ProductoId = 4,
-                            CategoriaId = 1
-                        },
-                        new
-                        {
-                            ProductoId = 5,
-                            CategoriaId = 1
-                        },
-                        new
-                        {
-                            ProductoId = 2,
-                            CategoriaId = 2
-                        },
-                        new
-                        {
-                            ProductoId = 3,
-                            CategoriaId = 3
-                        },
-                        new
-                        {
-                            ProductoId = 4,
-                            CategoriaId = 4
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.Usuario", b =>
@@ -262,30 +150,6 @@ namespace CrombieProytecto_V0._2.Migrations
                         .IsUnique();
 
                     b.ToTable("Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4220),
-                            Email = "admin@example.com",
-                            Nombre = "Admin",
-                            PasswordHash = "Admin123!",
-                            Roles = 1,
-                            Salt = "random_salt",
-                            Username = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4222),
-                            Email = "user@example.com",
-                            Nombre = "User",
-                            PasswordHash = "User123!",
-                            Roles = 0,
-                            Salt = "random_salt",
-                            Username = "user"
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.WishList", b =>
@@ -314,22 +178,6 @@ namespace CrombieProytecto_V0._2.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("WishList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4630),
-                            IdUsuario = 2,
-                            Nombre = "Mi Setup Gaming"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4632),
-                            IdUsuario = 2,
-                            Nombre = "Tecnología Móvil"
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.WishListProductos", b =>
@@ -359,43 +207,6 @@ namespace CrombieProytecto_V0._2.Migrations
                     b.HasIndex("IdWishList");
 
                     b.ToTable("WishlistProductos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4697),
-                            IdProducto = 1,
-                            IdWishList = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4699),
-                            IdProducto = 4,
-                            IdWishList = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4700),
-                            IdProducto = 5,
-                            IdWishList = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4702),
-                            IdProducto = 2,
-                            IdWishList = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2025, 1, 26, 13, 46, 41, 74, DateTimeKind.Utc).AddTicks(4703),
-                            IdProducto = 3,
-                            IdWishList = 2
-                        });
                 });
 
             modelBuilder.Entity("CrombieProytecto_V0._2.Models.Entidades.ProductoCategoria", b =>

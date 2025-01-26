@@ -5,18 +5,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrombieProytecto_V0._2.Service
 {
-    public  class DatabaseSeeder
+    public class DatabaseSeeder
     {
-        public static async Task SeedDatabase(IServiceProvider serviceProvider)
-        {
-            using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ProyectContext>();
-            var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
+        private readonly ProyectContext _context;
+        private readonly IAuthService _authService;
 
-            await UserSeeder.SeedUsersAsync(context, authService);
-            await CategorySeeder.SeedCategoriesAsync(context);
-            await ProductSeeder.SeedProductsAsync(context);
-            await WishListSeeder.SeedWishListsAsync(context);
+        public DatabaseSeeder(ProyectContext context, IAuthService authService)
+        {
+            _context = context;
+            _authService = authService;
         }
+
+      /*  public async Task SeedDatabase()
+        {
+            await UserSeeder.SeedUsersAsync(_context, _authService);
+            await CategorySeeder.SeedCategoriesAsync(_context);
+            await ProductSeeder.SeedProductsAsync(_context);
+            await WishListSeeder.SeedWishListsAsync(_context);
+        }*/
     }
 }

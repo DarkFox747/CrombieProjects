@@ -79,6 +79,15 @@ namespace CrombieProytecto_V0._2.Context
                 .WithMany(c => c.ProductoCategorias)
                 .HasForeignKey(pc => pc.CategoriaId);
 
+            // Seed Data
+            modelBuilder.ApplyConfiguration(new UsuarioSeed());
+            modelBuilder.ApplyConfiguration(new ProductoSeed());
+            modelBuilder.ApplyConfiguration(new CategoriaSeed());
+            modelBuilder.ApplyConfiguration(new ProductoCategoriaSeed());
+            modelBuilder.ApplyConfiguration(new WishListSeed());
+            modelBuilder.ApplyConfiguration(new WishListProductosSeed());
+
+
         }
     }
 }
