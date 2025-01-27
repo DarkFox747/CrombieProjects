@@ -17,12 +17,6 @@ namespace CrombieProytecto_V0._2.Service
             _bucketName = configuration["AWS:BucketName"];
         }
 
-        /// <summary>
-        /// Shows how to upload a file from the local computer to an Amazon S3
-        /// bucket.
-        /// </summary>
-        /// <param name="file">The file to upload.</param>
-        /// <returns>A string value indicating the key of the uploaded file.</returns>
         public async Task<string> UploadFileAsync(IFormFile file)
         {
             var key = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -34,16 +28,11 @@ namespace CrombieProytecto_V0._2.Service
                 InputStream = memoryStream,
                 Key = key,
                 BucketName = _bucketName
-
             };
             await fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
             return key;
         }
 
-        /// <summary>
-        /// Deletes a file from an Amazon S3 bucket.
-        /// </summary>
-        /// <param name="key">The key of the file to delete.</param>
         public async Task DeleteFileAsync(string key)
         {
             var fileTransferUtility = new TransferUtility(_s3Client);
@@ -54,18 +43,6 @@ namespace CrombieProytecto_V0._2.Service
             });
         }
 
-        /// <summary>
-        /// Shows how to upload a file from the local computer to an Amazon S3
-        /// bucket.
-        /// </summary>
-        /// <param name="client">An initialized Amazon S3 client object.</param>
-        /// <param name="bucketName">The Amazon S3 bucket to which the object
-        /// will be uploaded.</param>
-        /// <param name="objectName">The object to upload.</param>
-        /// <param name="filePath">The path, including file name, of the object
-        /// on the local computer to upload.</param>
-        /// <returns>A boolean value indicating the success or failure of the
-        /// upload procedure.</returns>
         public static async Task<bool> UploadFileAsync(
             IAmazonS3 client,
             string bucketName,
@@ -80,16 +57,46 @@ namespace CrombieProytecto_V0._2.Service
             };
 
             var response = await client.PutObjectAsync(request);
-            if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+            return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public async Task<Stream> GetFileAsync(string key)
+        {
+            var request = new GetObjectRequest
             {
-                Console.WriteLine($"Successfully uploaded {objectName} to {bucketName}.");
-                return true;
-            }
-            else
+                BucketName = _bucketName,
+                Key = key
+            };
+
+            using var response = await _s3Client.GetObjectAsync(request);
+            var memoryStream = new MemoryStream();
+            await response.ResponseStream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+        public async Task<List<string>> ListFilesAsync()
+        {
+            var request = new ListObjectsV2Request
             {
-                Console.WriteLine($"Could not upload {objectName} to {bucketName}.");
-                return false;
-            }
+                BucketName = _bucketName
+            };
+
+            var response = await _s3Client.ListObjectsV2Async(request);
+            return response.S3Objects.Select(o => o.Key).ToList();
+        }
+
+        public async Task<string> GetFileUrlAsync(string key)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = _bucketName,
+                Key = key,
+                Expires = DateTime.UtcNow.AddHours(1)
+            };
+
+            var url = _s3Client.GetPreSignedURL(request);
+            return url;
         }
     }
 }

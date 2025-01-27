@@ -13,7 +13,7 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _s3Service = s3Service;
         }
-       
+
         [HttpPost("Cargar Productos al S3")]
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
@@ -25,5 +25,20 @@ namespace CrombieProytecto_V0._2.Controllers
             var key = await _s3Service.UploadFileAsync(file);
             return Ok(new { Key = key });
         }
+
+        [HttpGet("Listar Productos del S3")]
+        public async Task<IActionResult> ListFiles()
+        {
+            var files = await _s3Service.ListFilesAsync();
+            return Ok(files);
+        }
+
+        [HttpDelete("Eliminar Producto del S3/{key}")]
+        public async Task<IActionResult> DeleteFile(string key)
+        {
+            await _s3Service.DeleteFileAsync(key);
+            return NoContent();
+        }
     }
+
 }
