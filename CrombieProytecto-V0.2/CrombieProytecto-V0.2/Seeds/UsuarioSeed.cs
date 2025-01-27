@@ -16,8 +16,8 @@ namespace CrombieProytecto_V0._2.Seeds
                 Nombre = "Admin",
                 Username = "admin",
                 Email = "admin@example.com",
-                PasswordHash = "JaMzig+xga1jXEFsOQr6x44WhlYoPp9JNDh9RtmZXcA=", //Admin123!
-                Salt = "36xB6nGSv2SPw0YwjKevhQ==",
+                PasswordHash = "Ru5l7/9VNQ1CgSzIZg5na0WWm+sZewJpWPBkBf+1RvA=", //Admin123!
+                Salt = "AuDooNbYaGBUTN7lnuViSw==",
                 Roles = UserRole.Admin,
                 CreatedAt = DateTime.UtcNow
             };
@@ -28,8 +28,8 @@ namespace CrombieProytecto_V0._2.Seeds
                 Nombre = "User",
                 Username = "user",
                 Email = "user@example.com",
-                PasswordHash = "User123!",
-                Salt = "random_salt",
+                PasswordHash = "Qmd4q0uhgOtcKfXPg/FIfcLbz855lv98RXbtH7GUbTA=", //User123!
+                Salt = "R4r0g+D2FKYGM5M8wv9P8w==",
                 Roles = UserRole.Regular,
                 CreatedAt = DateTime.UtcNow
             };
