@@ -1,5 +1,4 @@
 using CrombieProytecto_V0._2.Context;
-using CrombieProytecto_V0._2.Seeds;
 using CrombieProytecto_V0._2.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,9 @@ using System.Text;
 using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
+using Amazon.CognitoIdentityProvider;
+using Amazon.Extensions.CognitoAuthentication;
+using Amazon;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,27 +23,81 @@ awsOptions.Credentials = new BasicAWSCredentials(
 builder.Services.AddDefaultAWSOptions(awsOptions);
 builder.Services.AddAWSService<IAmazonS3>();
 
-// Add services to the container.
+// Configurar AWS Cognito
+builder.Services.AddSingleton<IAmazonCognitoIdentityProvider, AmazonCognitoIdentityProviderClient>(sp =>
+{
+    var config = new AmazonCognitoIdentityProviderConfig
+    {
+        RegionEndpoint = RegionEndpoint.GetBySystemName(builder.Configuration["AWS:Region"])
+    };
+    return new AmazonCognitoIdentityProviderClient(
+        builder.Configuration["AWS:AccessKey"],
+        builder.Configuration["AWS:SecretKey"],
+        config
+    );
+});
+builder.Services.AddSingleton<CognitoUserPool>(sp =>
+{
+    var provider = sp.GetRequiredService<IAmazonCognitoIdentityProvider>();
+    return new CognitoUserPool(
+        builder.Configuration["AWS:UserPoolId"],
+        builder.Configuration["AWS:ClientId"],
+        provider
+    );
+});
+
+// Configurar la autenticación JWT para AWS Cognito y JWT personalizado
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Cognito";
+    options.DefaultChallengeScheme = "Cognito";
+})
+.AddJwtBearer("Cognito", options =>
+{
+    options.Authority = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}";
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}",
+        ValidAudience = builder.Configuration["AWS:ClientId"],
+        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+        {
+            // Obtener las claves de firma de Cognito
+            var cognitoIssuer = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}";
+            var keys = new JsonWebKeySet($"{cognitoIssuer}/.well-known/jwks.json").GetSigningKeys();
+            return keys;
+        }
+    };
+})
+.AddJwtBearer("Jwt", options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+
+// Agregar servicios al contenedor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<ProyectContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<WishListService>();
+builder.Services.AddScoped<S3Service>();
+builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<ICognitoAuthService, CognitoAuthService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -71,12 +127,6 @@ builder.Services.AddSwaggerGen(c =>
             }
     });
 });
-builder.Services.AddScoped<ProductoService>();
-builder.Services.AddScoped<UsuarioService>();
-builder.Services.AddScoped<WishListService>();
-builder.Services.AddScoped<S3Service>();
-//builder.Services.AddScoped<DatabaseSeeder>();
-builder.Services.AddScoped<CategoriaService>();
 
 var app = builder.Build();
 
@@ -87,13 +137,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
-/*using (var scope = app.Services.CreateScope())
-{
-    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
-    await seeder.SeedDatabase();
-}*/
 
 app.Run();
