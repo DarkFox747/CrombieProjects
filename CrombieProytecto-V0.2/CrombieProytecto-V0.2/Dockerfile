@@ -1,30 +1,36 @@
-# Consulte https://aka.ms/customizecontainer para aprender a personalizar su contenedor de depuración y cómo Visual Studio usa este Dockerfile para compilar sus imágenes para una depuración más rápida.
-
-# Esta fase se usa cuando se ejecuta desde VS en modo rápido (valor predeterminado para la configuración de depuración)
+# Fase base para ejecutar el contenedor
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
 
 # Esta fase se usa para compilar el proyecto de servicio
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["CrombieProytecto-V0.2/CrombieProytecto-V0.2.csproj", "CrombieProytecto-V0.2/"]
-RUN dotnet restore "./CrombieProytecto-V0.2/CrombieProytecto-V0.2.csproj"
+COPY ["CrombieProytecto-V0.2.csproj", "."]
+RUN dotnet restore "./CrombieProytecto-V0.2.csproj"
 COPY . .
-WORKDIR "/src/CrombieProytecto-V0.2"
+WORKDIR "/src/."
 RUN dotnet build "./CrombieProytecto-V0.2.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
+# Esta fase se usa para publicar el proyecto
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./CrombieProytecto-V0.2.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Esta fase se usa en producción o cuando se ejecuta desde VS en modo normal (valor predeterminado cuando no se usa la configuración de depuración)
+# Fase final para producción
 FROM base AS final
 WORKDIR /app
+
+# Copiar la publicación desde la fase anterior
 COPY --from=publish /app/publish .
+
+# Copiar el archivo .env al contenedor
+COPY .env .
+
+# Configurar las variables de entorno desde el archivo .env
+ENV DOTNET_ENVIRONMENT=Production
+
+# Comando para ejecutar el servicio
 ENTRYPOINT ["dotnet", "CrombieProytecto-V0.2.dll"]

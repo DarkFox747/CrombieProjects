@@ -11,9 +11,13 @@ using Amazon.Runtime;
 using Amazon.CognitoIdentityProvider;
 using Amazon.Extensions.CognitoAuthentication;
 using Amazon;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//env config
+Env.Load();
+builder.Configuration.AddEnvironmentVariables();
 // Configurar AWS
 var awsOptions = builder.Configuration.GetAWSOptions();
 awsOptions.Credentials = new BasicAWSCredentials(
@@ -117,7 +121,19 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddSqlServer<ProyectContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+// Intentar obtener la cadena de conexión desde el secret
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Si no hay un secret disponible, usar la cadena de conexión del archivo .env
+if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+}
+
+// Registrar el contexto con la cadena de conexión seleccionada
+builder.Services.AddSqlServer<ProyectContext>(connectionString);
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<UsuarioService>();
