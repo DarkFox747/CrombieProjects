@@ -17,7 +17,7 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _wishListService = wishListService;
         }
-
+        //Obtiene todas las wishlists
         [HttpGet ("Get de todas las wishlist")]
         public async Task<ActionResult<IEnumerable<WishListDto>>> GetWishLists()
         {
@@ -32,7 +32,7 @@ namespace CrombieProytecto_V0._2.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+        //Obtiene wishlist por ID
         [HttpGet("Get wishlist por:{id}")]
         public async Task<ActionResult<WishListDto>> GetWishList(int id)
         {
@@ -44,7 +44,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return Ok(wishList);
         }
-
+        //Crea nueva wishlist
         [HttpPost("Crear Wishlist por nombre:{nombre}")]
         public async Task<ActionResult<WishListDto>> CreateWishList(string nombre)
         {
@@ -53,7 +53,7 @@ namespace CrombieProytecto_V0._2.Controllers
             var wishList = await _wishListService.CreateWishListAsync(createDto, userId);
             return CreatedAtAction(nameof(GetWishList), new { id = wishList.Id }, wishList);
         }
-
+        //Agrega producto a wishlist existente
         [HttpPost("Agregar un producto a al wishlist{wishListId}")]
         public async Task<ActionResult<WishListDto>> AddProductToWishList(int wishListId, int productId)
         {
@@ -68,7 +68,7 @@ namespace CrombieProytecto_V0._2.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        //Elimina producto de wishlist existente
         [HttpDelete(template: "Eliminar un producto de la wishlist por id:{wishListId}/remove-product/{productId}")]
         public async Task<ActionResult<WishListDto>> RemoveProductFromWishList(int wishListId, int productId)
         {
@@ -80,7 +80,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return Ok(wishList);
         }
-
+        //Elimina wishlist por ID
         [HttpDelete("Eliminar una wishlist por id:{id}")]
         public async Task<IActionResult> DeleteWishList(int id)
         {
