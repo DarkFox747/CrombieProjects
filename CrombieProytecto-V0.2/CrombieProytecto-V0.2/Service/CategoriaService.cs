@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrombieProytecto_V0._2.Service
 {
+    //Define los métodos para Categoría
     public class CategoriaService
     {
         private readonly ProyectContext _context;
@@ -13,7 +14,7 @@ namespace CrombieProytecto_V0._2.Service
         {
             _context = context;
         }
-
+        //Obtiene todas las categorías
         public async Task<IEnumerable<CategoriaDto>> GetCategoriasAsync()
         {
             return await _context.Categorias
@@ -24,7 +25,7 @@ namespace CrombieProytecto_V0._2.Service
                 })
                 .ToListAsync();
         }
-
+        //Obtiene una categoría por ID
         public async Task<CategoriaDto?> GetCategoriaAsync(int id)
         {
             var categoria = await _context.Categorias.FindAsync(id);
@@ -37,7 +38,7 @@ namespace CrombieProytecto_V0._2.Service
                 Nombre = categoria.Nombre
             };
         }
-
+        //Crea una nueva categoría
         public async Task<CategoriaDto> CreateCategoriaAsync(CategoriaDto createDto)
         {
             var categoria = new Categoria
@@ -55,7 +56,7 @@ namespace CrombieProytecto_V0._2.Service
                 Nombre = categoria.Nombre
             };
         }
-
+        //Actualiza una categoría existente
         public async Task<bool> UpdateCategoriaAsync(int id, CategoriaDto updateDto)
         {
             var categoria = await _context.Categorias.FindAsync(id);
@@ -68,7 +69,7 @@ namespace CrombieProytecto_V0._2.Service
             await _context.SaveChangesAsync();
             return true;
         }
-
+        //Elimina una categoría existente
         public async Task<bool> DeleteCategoriaAsync(int id)
         {
             var categoria = await _context.Categorias.FindAsync(id);

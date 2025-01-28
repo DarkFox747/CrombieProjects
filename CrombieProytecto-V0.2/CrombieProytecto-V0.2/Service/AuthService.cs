@@ -40,7 +40,7 @@ namespace CrombieProytecto_V0._2.Service
             _userPool = userPool;
             _provider = provider;
         }
-
+        //Método para registrar nuevo usuario
         public async Task<Usuario> RegisterUser(string nombre, string username, string email, string password)
         {
             if (await _context.Usuarios.AnyAsync(u => u.Email == email))
@@ -64,7 +64,7 @@ namespace CrombieProytecto_V0._2.Service
             await _context.SaveChangesAsync();
             return usuario;
         }
-
+        //Método para iniciar sesión
         public async Task<string> Login(string email, string password)
         {
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
@@ -78,7 +78,7 @@ namespace CrombieProytecto_V0._2.Service
             var token = GenerateJwtToken(usuario);
             return token;
         }
-
+        //Método para registrar usuario con Amazon Cognito
         public async Task<string> RegisterUserWithCognito(RegistroUsuarioDto registroUsuarioDto)
         {
             var signUpRequest = new SignUpRequest
@@ -95,7 +95,7 @@ namespace CrombieProytecto_V0._2.Service
             var signUpResponse = await _provider.SignUpAsync(signUpRequest).ConfigureAwait(false);
             return signUpResponse.UserSub;
         }
-
+        //Método para iniciar sesión con Amazon Cognito
         public async Task<string> LoginWithCognito(string email, string password)
         {
             var secretHash = CalculateSecretHash(email);
@@ -128,7 +128,7 @@ namespace CrombieProytecto_V0._2.Service
                 throw new Exception("Authentication failed.");
             }
         }
-
+        //Método para cambiar la contraseña con Amazon Cognito
         public async Task<string> ChangePasswordWithCognito(string email, string oldPassword, string newPassword)
         {
             var secretHash = CalculateSecretHash(email);
@@ -170,7 +170,7 @@ namespace CrombieProytecto_V0._2.Service
                 throw new Exception("Password change failed.");
             }
         }
-
+        //Método para hashear contraseña
         public string HashPassword(string password, out string salt)
         {
             salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(128 / 8));
@@ -181,7 +181,7 @@ namespace CrombieProytecto_V0._2.Service
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
         }
-
+        //Método para verificar contraseña
         public bool VerifyPassword(string password, string hash, string salt)
         {
             string newHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -193,7 +193,7 @@ namespace CrombieProytecto_V0._2.Service
 
             return newHash == hash;
         }
-
+        //Método para generar JWT Token
         private string GenerateJwtToken(Usuario usuario)
         {
             var claims = new[]
@@ -215,7 +215,7 @@ namespace CrombieProytecto_V0._2.Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
+        //Método para calcular el Hash Secreto de usuario
         private string CalculateSecretHash(string email)
         {
             var clientId = _configuration["AWS:ClientId"];

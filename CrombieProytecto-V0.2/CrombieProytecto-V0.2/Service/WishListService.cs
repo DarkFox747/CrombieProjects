@@ -13,7 +13,7 @@ namespace CrombieProytecto_V0._2.Service
         {
             _context = context;
         }
-
+        //Obtiene todas las wishlist
         public async Task<IEnumerable<WishListDto>> GetWishListsAsync(int userId)
         {
             return await _context.WishList
@@ -36,7 +36,7 @@ namespace CrombieProytecto_V0._2.Service
                 })
                 .ToListAsync();
         }
-
+        //Obtiene una wishlist por ID
         public async Task<WishListDto?> GetWishListByIdAsync(int id, int userId)
         {
             var wishList = await _context.WishList
@@ -61,7 +61,7 @@ namespace CrombieProytecto_V0._2.Service
                 }).ToList()
             };
         }
-
+        //Crea nueva wishlist
         public async Task<WishListDto> CreateWishListAsync(CrearWishListDto createDto, int userId)
         {
             var wishList = new WishList
@@ -82,7 +82,7 @@ namespace CrombieProytecto_V0._2.Service
                 Productos = new List<ProductoDto>()
             };
         }
-
+        //Agrega producto a una wishlist existente
         public async Task<WishListDto?> AddProductToWishListAsync(int wishListId, int productId, int userId)
         {
             var wishList = await _context.WishList
@@ -110,7 +110,7 @@ namespace CrombieProytecto_V0._2.Service
 
             return await GetWishListByIdAsync(wishListId, userId);
         }
-
+        //Remueve producto de una wishlist existente
         public async Task<WishListDto?> RemoveProductFromWishListAsync(int wishListId, int productId, int userId)
         {
             var wishList = await _context.WishList
@@ -127,7 +127,7 @@ namespace CrombieProytecto_V0._2.Service
 
             return await GetWishListByIdAsync(wishListId, userId);
         }
-
+        //Elimina una wishlist existente
         public async Task<bool> DeleteWishListAsync(int id, int userId)
         {
             var wishList = await _context.WishList.FirstOrDefaultAsync(w => w.Id == id && w.IdUsuario == userId);

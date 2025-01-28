@@ -16,7 +16,7 @@ namespace CrombieProytecto_V0._2.Service
             _s3Client = s3Client;
             _bucketName = configuration["AWS:BucketName"];
         }
-
+        //Sube archivo a Amazon S3
         public async Task<string> UploadFileAsync(IFormFile file)
         {
             var key = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -32,7 +32,7 @@ namespace CrombieProytecto_V0._2.Service
             await fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
             return key;
         }
-
+        //Elimina archivo cargado en Amazon S3
         public async Task DeleteFileAsync(string key)
         {
             var fileTransferUtility = new TransferUtility(_s3Client);
@@ -59,7 +59,7 @@ namespace CrombieProytecto_V0._2.Service
             var response = await client.PutObjectAsync(request);
             return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
         }
-
+        //Obtiene archivo cargado a Amazon S3
         public async Task<Stream> GetFileAsync(string key)
         {
             var request = new GetObjectRequest
@@ -74,7 +74,7 @@ namespace CrombieProytecto_V0._2.Service
             memoryStream.Position = 0;
             return memoryStream;
         }
-
+        //Obtiene todos los archivos cargados a Amazon S3
         public async Task<List<string>> ListFilesAsync()
         {
             var request = new ListObjectsV2Request
@@ -85,7 +85,7 @@ namespace CrombieProytecto_V0._2.Service
             var response = await _s3Client.ListObjectsV2Async(request);
             return response.S3Objects.Select(o => o.Key).ToList();
         }
-
+        //Obtiene la URL de un archivo cargado a Amazon S3
         public async Task<string> GetFileUrlAsync(string key)
         {
             var request = new GetPreSignedUrlRequest

@@ -6,6 +6,7 @@ using CrombieProytecto_V0._2.Models.Entidades;
 
 namespace CrombieProytecto_V0._2.Service
 {
+    //Define los métodos para Producto
     public class ProductoService
     {
         private readonly ProyectContext _context;
@@ -14,7 +15,7 @@ namespace CrombieProytecto_V0._2.Service
         {
             _context = context;
         }
-
+        //Obtiene todos los productos
         public async Task<IEnumerable<ProductoDto>> GetProductsAsync()
         {
             return await _context.Productos
@@ -36,7 +37,7 @@ namespace CrombieProytecto_V0._2.Service
                 })
                 .ToListAsync();
         }
-
+        //Obtiene un producto por ID
         public async Task<ProductoDto?> GetProductAsync(int id)
         {
             var producto = await _context.Productos
@@ -62,7 +63,7 @@ namespace CrombieProytecto_V0._2.Service
                 }).ToList()
             };
         }
-
+        //Crea un nuevo producto
         public async Task<ProductoDto> CreateProductAsync(CrearProductoDto createDto)
         {
             var producto = new Producto
@@ -101,7 +102,7 @@ namespace CrombieProytecto_V0._2.Service
                 Categorias = createDto.CategoriaIds.Select(id => new CategoriaDto { Id = id }).ToList()
             };
         }
-
+        //Actualiza un producto existente
         public async Task<bool> UpdateProductAsync(int id, CrearProductoDto updateDto)
         {
             var producto = await _context.Productos
@@ -135,7 +136,7 @@ namespace CrombieProytecto_V0._2.Service
             await _context.SaveChangesAsync();
             return true;
         }
-
+        //Elimina producto existente
         public async Task<bool> DeleteProductAsync(int id)
         {
             var producto = await _context.Productos.FindAsync(id);

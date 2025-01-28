@@ -17,7 +17,7 @@ namespace CrombieProytecto_V0._2.Service
             _authService = authService;
             _context = context;
         }
-
+        //Método para registrar nuevo usuario
         public async Task<Usuario> RegisterAsync(RegistroUsuarioDto registerDto)
         {
             return await _authService.RegisterUser(
@@ -26,7 +26,7 @@ namespace CrombieProytecto_V0._2.Service
                 registerDto.Email,
                 registerDto.Password);
         }
-
+        //Método para iniciar sesión de usuario
         public async Task<string> LoginAsync(LoginDto loginDto)
         {
             return await _authService.Login(loginDto.Email, loginDto.Password);
