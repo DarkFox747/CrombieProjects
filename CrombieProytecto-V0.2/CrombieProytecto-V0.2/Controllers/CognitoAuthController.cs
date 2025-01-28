@@ -13,21 +13,21 @@ public class CognitoAuthController : ControllerBase
     {
         _authService = authService;
     }
-
+    //Inicia sesión a un usuario
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginDto request)
     {
         var token = await _authService.LoginAsync(request.Email, request.Password);
         return Ok(new { Token = token });
     }
-
+    //Registra un nuevo usuario
     [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegistroUsuarioDto registroUsuarioDto)
     {
         var userSub = await _authService.RegisterUserAsync(registroUsuarioDto);
         return Ok(new { UserSub = userSub });
     }
-
+    //Actualiza la password de un usuario
     [HttpPost("changepassword")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto request)
     {

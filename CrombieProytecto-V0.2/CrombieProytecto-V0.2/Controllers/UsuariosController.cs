@@ -15,7 +15,7 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _usuarioService = usuarioService;
         }
-
+        //Registra un nuevo Usuario
         [HttpPost("Registro")]
         public async Task<ActionResult<Usuario>> Register([FromQuery] string nombre, [FromQuery] string username, [FromQuery] string email, [FromQuery] string password)
         {
@@ -37,7 +37,7 @@ namespace CrombieProytecto_V0._2.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        //Permite iniciar sesión a un usuario registrado
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromQuery] string email, [FromQuery] string password)
         {

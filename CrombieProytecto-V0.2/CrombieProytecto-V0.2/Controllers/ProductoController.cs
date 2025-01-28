@@ -20,7 +20,7 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _productoService = productoService;
         }
-
+        //Obtiene todos los productos
         [HttpGet("Get de todos los productos")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductoDto>>> GetProducts()
@@ -28,7 +28,7 @@ namespace CrombieProytecto_V0._2.Controllers
             var productos = await _productoService.GetProductsAsync();
             return Ok(productos);
         }
-
+        //Obtiene un producto por ID
         [HttpGet("Get de prodcutos por id: {id}")]
         [AllowAnonymous]
         public async Task<ActionResult<ProductoDto>> GetProduct(int id)
@@ -39,7 +39,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return Ok(producto);
         }
-
+        //Agrega un nuevo producto
         [HttpPost("Agregar un producto:")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
@@ -56,7 +56,7 @@ namespace CrombieProytecto_V0._2.Controllers
             var producto = await _productoService.CreateProductAsync(createDto);
             return CreatedAtAction(nameof(GetProduct), new { id = producto.Id }, producto);
         }
-
+        //Modifica un producto existente
         [HttpPut("Modificar un producto:{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
@@ -76,7 +76,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return NoContent();
         }
-
+        //Elimina un producto existente
         [HttpDelete("Eliminar un producto:{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)

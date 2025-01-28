@@ -16,7 +16,7 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _categoriaService = categoriaService;
         }
-
+        //Obtiene todas las categorías
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CategoriaDto>>> GetCategorias()
@@ -24,7 +24,7 @@ namespace CrombieProytecto_V0._2.Controllers
             var categorias = await _categoriaService.GetCategoriasAsync();
             return Ok(categorias);
         }
-
+        //Obtiene una categoría por ID
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<CategoriaDto>> GetCategoria(int id)
@@ -35,14 +35,14 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return Ok(categoria);
         }
-
+        //Crea una nueva categoría
         [HttpPost]
         public async Task<ActionResult<CategoriaDto>> CreateCategoria(CategoriaDto createDto)
         {
             var categoria = await _categoriaService.CreateCategoriaAsync(createDto);
             return CreatedAtAction(nameof(GetCategoria), new { id = categoria.Id }, categoria);
         }
-
+        //Actualiza una categoría existente
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategoria(int id, CategoriaDto updateDto)
         {
@@ -52,7 +52,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return NoContent();
         }
-
+        //Elimina una categoría existente
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategoria(int id)
         {
