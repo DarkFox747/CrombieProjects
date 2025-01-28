@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CrombieProytecto_V0._2.Seeds
 {
+    //Define la configuración para la entidad Producto
+
     public class ProductoSeed : IEntityTypeConfiguration<Producto>
     {
         public void Configure(EntityTypeBuilder<Producto> builder)

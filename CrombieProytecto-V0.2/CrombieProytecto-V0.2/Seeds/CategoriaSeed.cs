@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CrombieProytecto_V0._2.Seeds
 {
+    //Define la configuración para la entidad Categoría
     public class CategoriaSeed : IEntityTypeConfiguration<Categoria>
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)

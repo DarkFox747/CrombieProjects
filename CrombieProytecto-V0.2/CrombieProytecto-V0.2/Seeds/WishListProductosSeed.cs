@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CrombieProytecto_V0._2.Seeds
 {
+
     public class WishListProductosSeed : IEntityTypeConfiguration<WishListProductos>
     {
         public void Configure(EntityTypeBuilder<WishListProductos> builder)
