@@ -8,7 +8,7 @@ namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Cognito,Jwt")]
     public class WishListsController : ControllerBase
     {
         private readonly WishListService _wishListService;

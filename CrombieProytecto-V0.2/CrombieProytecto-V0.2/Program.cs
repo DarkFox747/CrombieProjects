@@ -49,8 +49,8 @@ builder.Services.AddSingleton<CognitoUserPool>(sp =>
 // Configurar la autenticación JWT para AWS Cognito y JWT personalizado
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = "Cognito";
-    options.DefaultChallengeScheme = "Cognito";
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer("Cognito", options =>
 {
@@ -89,16 +89,6 @@ builder.Services.AddAuthentication(options =>
 // Agregar servicios al contenedor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSqlServer<ProyectContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ProductoService>();
-builder.Services.AddScoped<UsuarioService>();
-builder.Services.AddScoped<WishListService>();
-builder.Services.AddScoped<S3Service>();
-builder.Services.AddScoped<CategoriaService>();
-builder.Services.AddScoped<ICognitoAuthService, CognitoAuthService>();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tu API", Version = "v1" });
@@ -114,19 +104,26 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
+        {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                new string[] {}
-            }
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
     });
 });
+builder.Services.AddSqlServer<ProyectContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<WishListService>();
+builder.Services.AddScoped<S3Service>();
+builder.Services.AddScoped<CategoriaService>();
 
 var app = builder.Build();
 

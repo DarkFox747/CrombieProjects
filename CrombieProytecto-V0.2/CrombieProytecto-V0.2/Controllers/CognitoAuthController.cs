@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/[controller]")]
 public class CognitoAuthController : ControllerBase
 {
-    private readonly ICognitoAuthService _authService;
+    private readonly IAuthService _authService;
 
-    public CognitoAuthController(ICognitoAuthService authService)
+    public CognitoAuthController(IAuthService authService)
     {
         _authService = authService;
     }
@@ -17,21 +17,21 @@ public class CognitoAuthController : ControllerBase
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginDto request)
     {
-        var token = await _authService.LoginAsync(request.Email, request.Password);
+        var token = await _authService.LoginWithCognito(request.Email, request.Password);
         return Ok(new { Token = token });
     }
 
     [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegistroUsuarioDto registroUsuarioDto)
     {
-        var userSub = await _authService.RegisterUserAsync(registroUsuarioDto);
+        var userSub = await _authService.RegisterUserWithCognito(registroUsuarioDto);
         return Ok(new { UserSub = userSub });
     }
 
     [HttpPost("changepassword")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto request)
     {
-        var token = await _authService.ChangePasswordAsync(request.Email, request.OldPassword, request.NewPassword);
+        var token = await _authService.ChangePasswordWithCognito(request.Email, request.OldPassword, request.NewPassword);
         return Ok(new { Token = token });
     }
 }
