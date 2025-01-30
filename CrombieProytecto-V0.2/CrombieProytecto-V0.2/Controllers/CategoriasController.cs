@@ -7,7 +7,7 @@ namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+
     public class CategoriasController : ControllerBase
     {
         private readonly CategoriaService _categoriaService;
@@ -17,8 +17,9 @@ namespace CrombieProytecto_V0._2.Controllers
             _categoriaService = categoriaService;
         }
         //Obtiene todas las categorías
+        [CustomAuthorize]
         [HttpGet]
-        [AllowAnonymous]
+        
         public async Task<ActionResult<IEnumerable<CategoriaDto>>> GetCategorias()
         {
             var categorias = await _categoriaService.GetCategoriasAsync();

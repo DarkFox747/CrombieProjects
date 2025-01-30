@@ -50,49 +50,57 @@ builder.Services.AddSingleton<CognitoUserPool>(sp =>
     );
 });
 
-// Configurar la autenticación JWT para AWS Cognito y JWT personalizado
+// Configuración de AWS Cognito
+builder.Services.AddAWSService<IAmazonCognitoIdentityProvider>();
+builder.Services.AddSingleton<CognitoUserPool>(provider =>
+{
+    var clientId = builder.Configuration["AWS:ClientId"];
+    var userPoolId = builder.Configuration["AWS:UserPoolId"];
+    var providerService = provider.GetRequiredService<IAmazonCognitoIdentityProvider>();
+    return new CognitoUserPool(userPoolId, clientId, providerService);
+});
+
+// Configuración de JWT
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer("Cognito", options =>
+.AddJwtBearer(options =>
 {
-    options.Authority = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}";
+    options.Authority = "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_IrSjTeGzM"; // Issuer
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}",
-        ValidAudience = builder.Configuration["AWS:ClientId"],
-        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
-        {
-            // Obtener las claves de firma de Cognito
-            var cognitoIssuer = $"https://cognito-idp.{builder.Configuration["AWS:Region"]}.amazonaws.com/{builder.Configuration["AWS:UserPoolId"]}";
-            var keys = new JsonWebKeySet($"{cognitoIssuer}/.well-known/jwks.json").GetSigningKeys();
-            return keys;
-        }
-    };
-})
-.AddJwtBearer("Jwt", options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        ValidateIssuer = true, // Validar el issuer
+        ValidIssuer = "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_IrSjTeGzM", // Issuer esperado
+        ValidateAudience = true, // Validar la audiencia
+        ValidAudience = "6jdqiqlge81r1b7bddg4035qob", // Client ID de Cognito
+        ValidateLifetime = true, // Validar la expiración del token
+        ClockSkew = TimeSpan.Zero // No permitir margen de tiempo para la expiración
     };
 });
+
+
+// Configuración de autorización
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAuthenticatedUser", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    });
+});
+
+// Registrar el servicio de autenticación
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Agregar servicios al contenedor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+// Configuración de Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tu API", Version = "v1" });

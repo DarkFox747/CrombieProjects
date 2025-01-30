@@ -21,7 +21,7 @@ namespace CrombieProytecto_V0._2.Service
         Task<string> Login(string email, string password);
         Task<string> RegisterUserWithCognito(RegistroUsuarioDto registroUsuarioDto);
         Task<string> LoginWithCognito(string email, string password);
-        Task<string> ChangePasswordWithCognito(string email, string oldPassword, string newPassword);
+        //Task<string> ChangePasswordWithCognito(string email, string oldPassword, string newPassword);
         string HashPassword(string password, out string salt);
         bool VerifyPassword(string password, string hash, string salt);
     }
@@ -40,7 +40,8 @@ namespace CrombieProytecto_V0._2.Service
             _userPool = userPool;
             _provider = provider;
         }
-        //Método para registrar nuevo usuario
+
+        // Método para registrar usuario localmente (JWT)
         public async Task<Usuario> RegisterUser(string nombre, string username, string email, string password)
         {
             if (await _context.Usuarios.AnyAsync(u => u.Email == email))
@@ -64,7 +65,8 @@ namespace CrombieProytecto_V0._2.Service
             await _context.SaveChangesAsync();
             return usuario;
         }
-        //Método para iniciar sesión
+
+        // Método para iniciar sesión localmente (JWT)
         public async Task<string> Login(string email, string password)
         {
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
@@ -78,38 +80,65 @@ namespace CrombieProytecto_V0._2.Service
             var token = GenerateJwtToken(usuario);
             return token;
         }
-        //Método para registrar usuario con Amazon Cognito
+
+        // Método para registrar usuario con Cognito
         public async Task<string> RegisterUserWithCognito(RegistroUsuarioDto registroUsuarioDto)
         {
+            // Registrar el usuario en Cognito
+            var clientId = _configuration["AWS:ClientId"];
+            var clientSecret = _configuration["AWS:ClientSecret"];
+            var secretHash = CalculateSecretHash(registroUsuarioDto.Email, clientId, clientSecret);
+
             var signUpRequest = new SignUpRequest
             {
-                ClientId = _configuration["AWS:ClientId"],
-                Username = registroUsuarioDto.Username,
+                ClientId = clientId,
+                Username = registroUsuarioDto.Email, // Usar el email como username
                 Password = registroUsuarioDto.Password,
+                SecretHash = secretHash, // Incluir el SECRET_HASH
                 UserAttributes = new List<AttributeType>
-                    {
-                        new AttributeType { Name = "email", Value = registroUsuarioDto.Email },
-                        new AttributeType { Name = "name", Value = registroUsuarioDto.Nombre }
-                    }
+        {
+            new AttributeType { Name = "email", Value = registroUsuarioDto.Email },
+            new AttributeType { Name = "name", Value = registroUsuarioDto.Nombre }
+        }
             };
+
             var signUpResponse = await _provider.SignUpAsync(signUpRequest).ConfigureAwait(false);
+
+            // Guardar el usuario en la base de datos local
+            var usuario = new Usuario
+            {
+                Nombre = registroUsuarioDto.Nombre,
+                Username = registroUsuarioDto.Username,
+                Email = registroUsuarioDto.Email,
+                PasswordHash = "", // No necesitas guardar la contraseña si usas Cognito
+                Salt = "", // No necesitas guardar el salt si usas Cognito
+                Roles = UserRole.Regular,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Usuarios.Add(usuario);
+            await _context.SaveChangesAsync();
+
             return signUpResponse.UserSub;
         }
-        //Método para iniciar sesión con Amazon Cognito
+
+        // Método para iniciar sesión con Cognito
         public async Task<string> LoginWithCognito(string email, string password)
         {
-            var secretHash = CalculateSecretHash(email);
+            var clientId = _configuration["AWS:ClientId"];
+            var clientSecret = _configuration["AWS:ClientSecret"];
+            var secretHash = CalculateSecretHash(email, clientId, clientSecret);
 
             var authRequest = new InitiateAuthRequest
             {
                 AuthFlow = AuthFlowType.USER_PASSWORD_AUTH,
-                ClientId = _configuration["AWS:ClientId"],
+                ClientId = clientId,
                 AuthParameters = new Dictionary<string, string>
-                    {
-                        { "USERNAME", email },
-                        { "PASSWORD", password },
-                        { "SECRET_HASH", secretHash }
-                    }
+        {
+            { "USERNAME", email },
+            { "PASSWORD", password },
+            { "SECRET_HASH", secretHash } // Incluir el SECRET_HASH
+        }
             };
 
             var authResponse = await _provider.InitiateAuthAsync(authRequest).ConfigureAwait(false);
@@ -120,7 +149,6 @@ namespace CrombieProytecto_V0._2.Service
             }
             else if (authResponse.ChallengeName == ChallengeNameType.NEW_PASSWORD_REQUIRED)
             {
-                // Manejar el caso en el que se requiere un cambio de contraseña temporal
                 throw new Exception("New password required.");
             }
             else
@@ -128,49 +156,11 @@ namespace CrombieProytecto_V0._2.Service
                 throw new Exception("Authentication failed.");
             }
         }
-        //Método para cambiar la contraseña con Amazon Cognito
-        public async Task<string> ChangePasswordWithCognito(string email, string oldPassword, string newPassword)
-        {
-            var secretHash = CalculateSecretHash(email);
 
-            var authRequest = new InitiateAuthRequest
-            {
-                AuthFlow = AuthFlowType.USER_PASSWORD_AUTH,
-                ClientId = _configuration["AWS:ClientId"],
-                AuthParameters = new Dictionary<string, string>
-                    {
-                        { "USERNAME", email },
-                        { "PASSWORD", oldPassword },
-                        { "SECRET_HASH", secretHash }
-                    }
-            };
+        // Método para cambiar la contraseña con Cognito
+       
 
-            var authResponse = await _provider.InitiateAuthAsync(authRequest).ConfigureAwait(false);
-
-            if (authResponse.ChallengeName == ChallengeNameType.NEW_PASSWORD_REQUIRED)
-            {
-                var challengeResponse = new RespondToAuthChallengeRequest
-                {
-                    ChallengeName = ChallengeNameType.NEW_PASSWORD_REQUIRED,
-                    ClientId = _configuration["AWS:ClientId"],
-                    ChallengeResponses = new Dictionary<string, string>
-                        {
-                            { "USERNAME", email },
-                            { "NEW_PASSWORD", newPassword },
-                            { "SECRET_HASH", secretHash }
-                        },
-                    Session = authResponse.Session
-                };
-
-                var challengeResponseResult = await _provider.RespondToAuthChallengeAsync(challengeResponse).ConfigureAwait(false);
-                return challengeResponseResult.AuthenticationResult.IdToken;
-            }
-            else
-            {
-                throw new Exception("Password change failed.");
-            }
-        }
-        //Método para hashear contraseña
+        // Métodos para hashear y verificar contraseña (JWT)
         public string HashPassword(string password, out string salt)
         {
             salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(128 / 8));
@@ -181,7 +171,7 @@ namespace CrombieProytecto_V0._2.Service
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
         }
-        //Método para verificar contraseña
+
         public bool VerifyPassword(string password, string hash, string salt)
         {
             string newHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -193,15 +183,16 @@ namespace CrombieProytecto_V0._2.Service
 
             return newHash == hash;
         }
-        //Método para generar JWT Token
+
+        // Método para generar JWT Token
         private string GenerateJwtToken(Usuario usuario)
         {
             var claims = new[]
             {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                    new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim(ClaimTypes.Role, usuario.Roles.ToString())
-                };
+            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+            new Claim(ClaimTypes.Email, usuario.Email),
+            new Claim(ClaimTypes.Role, usuario.Roles.ToString())
+        };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -215,14 +206,13 @@ namespace CrombieProytecto_V0._2.Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        //Método para calcular el Hash Secreto de usuario
-        private string CalculateSecretHash(string email)
+
+        // Método para calcular el Hash Secreto de usuario (Cognito)
+        public static string CalculateSecretHash(string username, string clientId, string clientSecret)
         {
-            var clientId = _configuration["AWS:ClientId"];
-            var clientSecret = _configuration["AWS:ClientSecret"];
-            var dataString = email + clientId;
-            var key = Encoding.UTF8.GetBytes(clientSecret);
+            var dataString = username + clientId;
             var data = Encoding.UTF8.GetBytes(dataString);
+            var key = Encoding.UTF8.GetBytes(clientSecret);
 
             using (var hmac = new HMACSHA256(key))
             {
@@ -230,5 +220,6 @@ namespace CrombieProytecto_V0._2.Service
                 return Convert.ToBase64String(hash);
             }
         }
+
     }
 }

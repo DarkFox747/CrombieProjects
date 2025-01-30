@@ -5,6 +5,7 @@ namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [CustomAuthorize]
     public class S3Controller : ControllerBase
     {
         private readonly S3Service _s3Service;
