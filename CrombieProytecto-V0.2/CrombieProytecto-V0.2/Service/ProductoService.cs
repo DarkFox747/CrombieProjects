@@ -10,15 +10,18 @@ namespace CrombieProytecto_V0._2.Service
     public class ProductoService
     {
         private readonly ProyectContext _context;
+        private readonly PaginationService<ProductoDto> _paginationService;
 
-        public ProductoService(ProyectContext context)
+        public ProductoService(ProyectContext context, PaginationService<ProductoDto> paginationService)
         {
             _context = context;
+            _paginationService = paginationService;
         }
-        //Obtiene todos los productos
-        public async Task<IEnumerable<ProductoDto>> GetProductsAsync()
+
+        //Obtiene todos los productos con paginación
+        public async Task<PaginatedResult<ProductoDto>> GetProductsAsync(PaginationParameters paginationParameters)
         {
-            return await _context.Productos
+            var query = _context.Productos
                 .Include(p => p.ProductoCategorias)
                 .ThenInclude(pc => pc.Categoria)
                 .Select(p => new ProductoDto
@@ -34,9 +37,11 @@ namespace CrombieProytecto_V0._2.Service
                         Id = pc.Categoria.Id,
                         Nombre = pc.Categoria.Nombre
                     }).ToList()
-                })
-                .ToListAsync();
+                });
+
+            return await _paginationService.GetPaginatedResult(query, paginationParameters.PageNumber, paginationParameters.PageSize);
         }
+
         //Obtiene un producto por ID
         public async Task<ProductoDto?> GetProductAsync(int id)
         {
@@ -63,6 +68,7 @@ namespace CrombieProytecto_V0._2.Service
                 }).ToList()
             };
         }
+
         //Crea un nuevo producto
         public async Task<ProductoDto> CreateProductAsync(CrearProductoDto createDto)
         {
@@ -102,6 +108,7 @@ namespace CrombieProytecto_V0._2.Service
                 Categorias = createDto.CategoriaIds.Select(id => new CategoriaDto { Id = id }).ToList()
             };
         }
+
         //Actualiza un producto existente
         public async Task<bool> UpdateProductAsync(int id, CrearProductoDto updateDto)
         {
@@ -136,6 +143,7 @@ namespace CrombieProytecto_V0._2.Service
             await _context.SaveChangesAsync();
             return true;
         }
+
         //Elimina producto existente
         public async Task<bool> DeleteProductAsync(int id)
         {

@@ -12,6 +12,7 @@ using Amazon.CognitoIdentityProvider;
 using Amazon.Extensions.CognitoAuthentication;
 using Amazon;
 using DotNetEnv;
+using CrombieProytecto_V0._2.Models.dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -148,6 +149,9 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<WishListService>();
 builder.Services.AddScoped<S3Service>();
 builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<PaginationService<ProductoDto>>();
+
+
 
 var app = builder.Build();
 

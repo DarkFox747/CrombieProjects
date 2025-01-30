@@ -20,14 +20,16 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _productoService = productoService;
         }
-        //Obtiene todos los productos
+
+        //Obtiene todos los productos con paginación
         [HttpGet("Get de todos los productos")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<ProductoDto>>> GetProducts()
+        public async Task<ActionResult<PaginatedResult<ProductoDto>>> GetProducts([FromQuery] PaginationParameters paginationParameters)
         {
-            var productos = await _productoService.GetProductsAsync();
+            var productos = await _productoService.GetProductsAsync(paginationParameters);
             return Ok(productos);
         }
+
         //Obtiene un producto por ID
         [HttpGet("Get de prodcutos por id: {id}")]
         [AllowAnonymous]
@@ -39,6 +41,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return Ok(producto);
         }
+
         //Agrega un nuevo producto
         [HttpPost("Agregar un producto:")]
         [Authorize(Roles = "Admin")]
@@ -56,6 +59,7 @@ namespace CrombieProytecto_V0._2.Controllers
             var producto = await _productoService.CreateProductAsync(createDto);
             return CreatedAtAction(nameof(GetProduct), new { id = producto.Id }, producto);
         }
+
         //Modifica un producto existente
         [HttpPut("Modificar un producto:{id}")]
         [Authorize(Roles = "Admin")]
@@ -76,6 +80,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
             return NoContent();
         }
+
         //Elimina un producto existente
         [HttpDelete("Eliminar un producto:{id}")]
         [Authorize(Roles = "Admin")]

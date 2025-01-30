@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CrombieProytecto_V0._2.Service;
+﻿using CrombieProytecto_V0._2.Service;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [CustomAuthorize]
+    [Authorize(Roles = "Admin")]
     public class S3Controller : ControllerBase
     {
         private readonly S3Service _s3Service;
@@ -14,32 +20,84 @@ namespace CrombieProytecto_V0._2.Controllers
         {
             _s3Service = s3Service;
         }
-        //Carga un producto en imágen a Amazon S3
-        [HttpPost("Cargar Productos al S3")]
+
+        // Subir una imagen a S3
+        [HttpPost("upload")]
+
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             if (file == null || file.Length == 0)
-            {
-                return BadRequest("No file provided.");
-            }
+                return BadRequest("Archivo no válido.");
 
-            var key = await _s3Service.UploadFileAsync(file);
-            return Ok(new { Key = key });
+            try
+            {
+                var key = await _s3Service.UploadFileAsync(file);
+                return Ok(new { Key = key, Message = "Imagen subida correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al subir la imagen: {ex.Message}");
+            }
         }
-        //Obtiene listado de productos cargados en Amazon S3
-        [HttpGet("Listar Productos del S3")]
-        public async Task<IActionResult> ListFiles()
+
+        // Obtener la URL de una imagen por su clave (key)
+        [HttpGet("url/{key}")]
+        public IActionResult GetImageUrl(string key)
         {
-            var files = await _s3Service.ListFilesAsync();
-            return Ok(files);
+            try
+            {
+                var url = _s3Service.GetFileUrl(key);
+                return Ok(new { Url = url });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la URL de la imagen: {ex.Message}");
+            }
         }
-        //Elimina un producto cargado en Amazon S3
-        [HttpDelete("Eliminar Producto del S3/{key}")]
-        public async Task<IActionResult> DeleteFile(string key)
+
+        // Obtener todas las URLs de las imágenes en el bucket
+        [HttpGet("urls")]
+        public async Task<IActionResult> GetAllImageUrls()
         {
-            await _s3Service.DeleteFileAsync(key);
-            return NoContent();
+            try
+            {
+                var urls = await _s3Service.GetAllFileUrlsAsync();
+                return Ok(urls);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener las URLs de las imágenes: {ex.Message}");
+            }
+        }
+
+        // Eliminar una imagen por su clave (key)
+        [HttpDelete("delete/{key}")]
+        public async Task<IActionResult> DeleteImage(string key)
+        {
+            try
+            {
+                await _s3Service.DeleteFileAsync(key);
+                return Ok(new { Message = "Imagen eliminada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al eliminar la imagen: {ex.Message}");
+            }
+        }
+
+        // Obtener todas las claves (keys) de las imágenes en el bucket
+        [HttpGet("keys")]
+        public async Task<IActionResult> GetAllKeys()
+        {
+            try
+            {
+                var keys = await _s3Service.ListFilesAsync();
+                return Ok(keys);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener las claves de las imágenes: {ex.Message}");
+            }
         }
     }
-
 }
