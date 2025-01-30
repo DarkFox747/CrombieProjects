@@ -21,9 +21,10 @@ namespace CrombieProytecto_V0._2.Service
         Task<string> Login(string email, string password);
         Task<string> RegisterUserWithCognito(RegistroUsuarioDto registroUsuarioDto);
         Task<string> LoginWithCognito(string email, string password);
-        //Task<string> ChangePasswordWithCognito(string email, string oldPassword, string newPassword);
+        Task<bool> ChangePasswordAsync(string email, string oldPassword, string newPassword);
         string HashPassword(string password, out string salt);
         bool VerifyPassword(string password, string hash, string salt);
+        Task<bool> ConfirmEmailAsync(string email, string confirmationCode);
     }
 
     public class AuthService : IAuthService
@@ -158,7 +159,53 @@ namespace CrombieProytecto_V0._2.Service
         }
 
         // Método para cambiar la contraseña con Cognito
-       
+        public async Task<bool> ChangePasswordAsync(string email, string oldPassword, string newPassword)
+        {
+            var clientId = _configuration["AWS:ClientId"];
+            var clientSecret = _configuration["AWS:ClientSecret"];
+            var secretHash = CalculateSecretHash(email, clientId, clientSecret);
+
+            // Primero, autenticar al usuario para obtener el AccessToken
+            var authRequest = new InitiateAuthRequest
+            {
+                AuthFlow = AuthFlowType.USER_PASSWORD_AUTH,
+                ClientId = clientId,
+                AuthParameters = new Dictionary<string, string>
+        {
+            { "USERNAME", email },
+            { "PASSWORD", oldPassword },
+            { "SECRET_HASH", secretHash }
+        }
+            };
+
+            var authResponse = await _provider.InitiateAuthAsync(authRequest).ConfigureAwait(false);
+
+            if (authResponse.AuthenticationResult == null)
+            {
+                throw new Exception("No se pudo autenticar al usuario.");
+            }
+
+            var accessToken = authResponse.AuthenticationResult.AccessToken;
+
+            // Cambiar la contraseña
+            var changePasswordRequest = new ChangePasswordRequest
+            {
+                AccessToken = accessToken,
+                PreviousPassword = oldPassword,
+                ProposedPassword = newPassword
+            };
+
+            try
+            {
+                var response = await _provider.ChangePasswordAsync(changePasswordRequest).ConfigureAwait(false);
+                return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores (por ejemplo, contraseña anterior incorrecta)
+                throw new Exception("Error al cambiar la contraseña: " + ex.Message);
+            }
+        }
 
         // Métodos para hashear y verificar contraseña (JWT)
         public string HashPassword(string password, out string salt)
@@ -221,5 +268,31 @@ namespace CrombieProytecto_V0._2.Service
             }
         }
 
+        //Metodo para confirmar el correo electronico (cognito)
+        public async Task<bool> ConfirmEmailAsync(string email, string confirmationCode)
+        {
+            var clientId = _configuration["AWS:ClientId"];
+            var clientSecret = _configuration["AWS:ClientSecret"];
+            var secretHash = CalculateSecretHash(email, clientId, clientSecret);
+
+            var confirmSignUpRequest = new ConfirmSignUpRequest
+            {
+                ClientId = clientId,
+                Username = email,
+                ConfirmationCode = confirmationCode,
+                SecretHash = secretHash
+            };
+
+            try
+            {
+                var response = await _provider.ConfirmSignUpAsync(confirmSignUpRequest).ConfigureAwait(false);
+                return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores (por ejemplo, código de confirmación inválido)
+                throw new Exception("Error al confirmar el correo electrónico: " + ex.Message);
+            }
+        }
     }
 }

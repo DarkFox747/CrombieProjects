@@ -74,5 +74,34 @@ namespace CrombieProytecto_V0._2.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailDto confirmEmailDto)
+        {
+            try
+            {
+                var result = await _authService.ConfirmEmailAsync(confirmEmailDto.Email, confirmEmailDto.ConfirmationCode);
+                return Ok(new { Success = result });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            try
+            {
+                var result = await _authService.ChangePasswordAsync(changePasswordDto.Email, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
+                return Ok(new { Success = result });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+       
     }
 }
