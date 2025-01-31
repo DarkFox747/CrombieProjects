@@ -27,7 +27,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Copiar el archivo .env al contenedor
-COPY .env .
+COPY /*.env .
 
 # Configurar las variables de entorno desde el archivo .env
 ENV DOTNET_ENVIRONMENT=Production

@@ -22,7 +22,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Obtiene todos los productos con paginación
-        [HttpGet("Get de todos los productos")]
+        [HttpGet("Get-All")]
         [AllowAnonymous]
         public async Task<ActionResult<PaginatedResult<ProductoDto>>> GetProducts([FromQuery] PaginationParameters paginationParameters)
         {
@@ -31,7 +31,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Obtiene un producto por ID
-        [HttpGet("Get de prodcutos por id: {id}")]
+        [HttpGet("Get-id{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<ProductoDto>> GetProduct(int id)
         {
@@ -43,7 +43,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Agrega un nuevo producto
-        [HttpPost("Agregar un producto:")]
+        [HttpPost("AddProduct:")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
         {
@@ -61,7 +61,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Modifica un producto existente
-        [HttpPut("Modificar un producto:{id}")]
+        [HttpPut("Eddit-Producto{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
         {
@@ -82,7 +82,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Elimina un producto existente
-        [HttpDelete("Eliminar un producto:{id}")]
+        [HttpDelete("DeleteProduct{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {

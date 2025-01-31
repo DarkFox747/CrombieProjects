@@ -87,7 +87,6 @@ namespace CrombieProytecto_V0._2.Context
             modelBuilder.ApplyConfiguration(new WishListSeed());
             modelBuilder.ApplyConfiguration(new WishListProductosSeed());
 
-
         }
     }
 }
