@@ -42,39 +42,29 @@ namespace CrombieProytecto_V0._2.Controllers
             return Ok(producto);
         }
 
-        //Agrega un nuevo producto
-        [HttpPost("AddProduct:")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductoDto>> CreateProduct([FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
+        // Agrega un nuevo producto
+        [HttpPost("AddProduct")]
+        
+        public async Task<ActionResult<ProductoDto>> CreateProduct(
+            [FromForm] CrearProductoDto createDto, // Recibe datos del producto
+            [FromForm] IFormFile imagen)           // Recibe el archivo de imagen
         {
-            var createDto = new CrearProductoDto
-            {
-                Nombre = nombre,
-                Descripcion = descripcion,
-                Precio = precio,
-                Stock = stock,
-                URL = url
-            };
+            if (imagen == null || imagen.Length == 0)
+                return BadRequest("Debe subir una imagen.");
 
-            var producto = await _productoService.CreateProductAsync(createDto);
+            var producto = await _productoService.CreateProductAsync(createDto, imagen);
             return CreatedAtAction(nameof(GetProduct), new { id = producto.Id }, producto);
         }
 
-        //Modifica un producto existente
+        // Modifica un producto existente
         [HttpPut("Eddit-Producto{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromQuery] string nombre, [FromQuery] string descripcion, [FromQuery] decimal precio, [FromQuery] int stock, [FromQuery] string? url)
+        public async Task<IActionResult> UpdateProduct(
+            int id,
+            [FromForm] CrearProductoDto updateDto, // Datos actualizados
+            [FromForm] IFormFile? imagen)          // Imagen opcional
         {
-            var updateDto = new CrearProductoDto
-            {
-                Nombre = nombre,
-                Descripcion = descripcion,
-                Precio = precio,
-                Stock = stock,
-                URL = url
-            };
-
-            var result = await _productoService.UpdateProductAsync(id, updateDto);
+            var result = await _productoService.UpdateProductAsync(id, updateDto, imagen);
             if (!result)
                 return NotFound();
 
@@ -83,7 +73,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
         //Elimina un producto existente
         [HttpDelete("DeleteProduct{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var result = await _productoService.DeleteProductAsync(id);

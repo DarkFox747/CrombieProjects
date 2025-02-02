@@ -37,7 +37,7 @@ namespace CrombieProytecto_V0._2.Service
                 InputStream = memoryStream,
                 Key = key,
                 BucketName = _bucketName,
-                CannedACL = S3CannedACL.PublicRead // Hacer el archivo público
+                //CannedACL = S3CannedACL.PublicRead // Hacer el archivo público
             };
 
             await fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
@@ -110,6 +110,23 @@ namespace CrombieProytecto_V0._2.Service
 
             var response = await _s3Client.ListObjectsV2Async(request);
             return response.S3Objects.Select(o => o.Key).ToList();
+        }
+
+        public async Task<string> UploadFileFromStreamAsync(Stream fileStream, string extension)
+        {
+            var key = $"{Guid.NewGuid()}.{extension}";
+            var fileTransferUtility = new TransferUtility(_s3Client);
+
+            var request = new TransferUtilityUploadRequest
+            {
+                InputStream = fileStream,
+                Key = key,
+                BucketName = _bucketName,
+                CannedACL = S3CannedACL.PublicRead
+            };
+
+            await fileTransferUtility.UploadAsync(request);
+            return key;
         }
     }
 }

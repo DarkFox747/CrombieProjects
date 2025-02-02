@@ -3,6 +3,8 @@ using CrombieProytecto_V0._2.Models.dtos;
 using CrombieProytecto_V0._2.Models;
 using Microsoft.EntityFrameworkCore;
 using CrombieProytecto_V0._2.Models.Entidades;
+using System;
+using CrombieProytecto_V0._2.Service;
 
 namespace CrombieProytecto_V0._2.Service
 {
@@ -11,11 +13,14 @@ namespace CrombieProytecto_V0._2.Service
     {
         private readonly ProyectContext _context;
         private readonly PaginationService<ProductoDto> _paginationService;
+        private readonly S3Service _s3Service;
+        private readonly string _bucketFolder = "productos"; //carpeta del s3
 
-        public ProductoService(ProyectContext context, PaginationService<ProductoDto> paginationService)
+        public ProductoService(ProyectContext context, PaginationService<ProductoDto> paginationService, S3Service S3Service)
         {
             _context = context;
             _paginationService = paginationService;
+            _s3Service = S3Service;
         }
 
         //Obtiene todos los productos con paginación
@@ -70,15 +75,20 @@ namespace CrombieProytecto_V0._2.Service
         }
 
         //Crea un nuevo producto
-        public async Task<ProductoDto> CreateProductAsync(CrearProductoDto createDto)
+        public async Task<ProductoDto> CreateProductAsync(CrearProductoDto createDto, IFormFile imagen)
         {
+
+            var imageKey = await _s3Service.UploadFileAsync(imagen);
+            var imageUrl = _s3Service.GetFileUrl(imageKey);
+
+
             var producto = new Producto
             {
                 Nombre = createDto.Nombre,
                 Descripcion = createDto.Descripcion,
                 Precio = createDto.Precio,
                 Stock = createDto.Stock,
-                URL = createDto.URL,
+                URL = imageUrl,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -110,7 +120,7 @@ namespace CrombieProytecto_V0._2.Service
         }
 
         //Actualiza un producto existente
-        public async Task<bool> UpdateProductAsync(int id, CrearProductoDto updateDto)
+        public async Task<bool> UpdateProductAsync(int id, CrearProductoDto updateDto, IFormFile? imagen)
         {
             var producto = await _context.Productos
                 .Include(p => p.ProductoCategorias)
@@ -119,25 +129,37 @@ namespace CrombieProytecto_V0._2.Service
             if (producto == null)
                 return false;
 
+            // Subir nueva imagen si se proporciona
+            if (imagen != null && imagen.Length > 0)
+            {
+                // Eliminar imagen anterior de S3
+                if (!string.IsNullOrEmpty(producto.URL))
+                {
+                    var oldImageKey = producto.URL.Split('/').Last();
+                    await _s3Service.DeleteFileAsync(oldImageKey);
+                }
+
+                // Subir nueva imagen
+                var imageKey = await _s3Service.UploadFileAsync(imagen);
+                producto.URL = _s3Service.GetFileUrl(imageKey);
+            }
+
+            // Actualizar otros campos
             producto.Nombre = updateDto.Nombre;
             producto.Descripcion = updateDto.Descripcion;
             producto.Precio = updateDto.Precio;
             producto.Stock = updateDto.Stock;
-            producto.URL = updateDto.URL;
             producto.UpdatedAt = DateTime.UtcNow;
 
-            // Actualizar las categorías
-            var existingCategorias = producto.ProductoCategorias.ToList();
-            _context.ProductoCategorias.RemoveRange(existingCategorias);
-
+            // Actualizar categorías
+            _context.ProductoCategorias.RemoveRange(producto.ProductoCategorias);
             foreach (var categoriaId in updateDto.CategoriaIds)
             {
-                var productoCategoria = new ProductoCategoria
+                _context.ProductoCategorias.Add(new ProductoCategoria
                 {
                     ProductoId = producto.Id,
                     CategoriaId = categoriaId
-                };
-                _context.ProductoCategorias.Add(productoCategoria);
+                });
             }
 
             await _context.SaveChangesAsync();

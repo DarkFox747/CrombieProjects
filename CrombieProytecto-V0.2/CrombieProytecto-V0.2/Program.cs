@@ -129,7 +129,9 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
 });
+
 
 // Intentar obtener la cadena de conexión desde el secret
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
