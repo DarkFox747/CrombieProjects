@@ -151,6 +151,11 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<WishListService>();
 builder.Services.AddScoped<S3Service>();
 builder.Services.AddScoped<CategoriaService>();
+// Registrar CarritoService
+builder.Services.AddScoped<CarritoService>();
+
+// Registrar CompraService
+builder.Services.AddScoped<CompraService>();
 builder.Services.AddScoped<PaginationService<ProductoDto>>();
 
 

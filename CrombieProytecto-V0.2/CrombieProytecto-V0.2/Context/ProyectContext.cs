@@ -14,6 +14,11 @@ namespace CrombieProytecto_V0._2.Context
         public DbSet<WishListProductos> WishlistProductos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<ProductoCategoria> ProductoCategorias { get; set; }
+        public DbSet<Carrito> Carritos { get; set; }
+        public DbSet<CarritoProducto> CarritoProductos { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<CompraProducto> CompraProductos { get; set; }
+
 
         public ProyectContext(DbContextOptions<ProyectContext> options) : base(options) { }
 
@@ -78,6 +83,13 @@ namespace CrombieProytecto_V0._2.Context
                 .HasOne(pc => pc.Categoria)
                 .WithMany(c => c.ProductoCategorias)
                 .HasForeignKey(pc => pc.CategoriaId);
+
+            modelBuilder.Entity<CarritoProducto>()
+                .HasKey(cp => new { cp.CarritoId, cp.ProductoId });
+
+            modelBuilder.Entity<CompraProducto>()
+                .HasKey(cp => new { cp.CompraId, cp.ProductoId });
+
 
             // Seed Data
             modelBuilder.ApplyConfiguration(new UsuarioSeed());
