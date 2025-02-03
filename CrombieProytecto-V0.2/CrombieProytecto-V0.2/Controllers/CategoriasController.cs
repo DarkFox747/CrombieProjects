@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]  
+    [Route("api/[controller]")]
+    
 
     public class CategoriasController : ControllerBase
     {

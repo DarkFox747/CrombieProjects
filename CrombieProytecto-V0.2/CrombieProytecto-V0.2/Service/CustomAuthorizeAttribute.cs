@@ -19,39 +19,49 @@ public class CustomAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
+        // Obtener IConfiguration desde el contenedor de dependencias
         var configuration = context.HttpContext.RequestServices.GetService<IConfiguration>();
+
+        // Obtener el token de la cabecera "Authorization"
         var token = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
         if (string.IsNullOrEmpty(token))
         {
+            // Si no hay token, devolver un error 401 (No autorizado)
             context.Result = new UnauthorizedResult();
             return;
         }
 
+        // Verificar si es un token JWT local
         var jwtHandler = new JwtSecurityTokenHandler();
         if (jwtHandler.CanReadToken(token))
         {
+            // Validar el token JWT local
             var principal = ValidateJwtToken(token, configuration);
             if (principal != null)
             {
+                // Si el token JWT es válido, establecer el usuario en el contexto
                 context.HttpContext.User = principal;
-                if (IsUserInRole(principal, RequiredRole))
+                if (IsUserAuthorized(principal))
                 {
                     return;
                 }
             }
         }
 
+        // Si no es un token JWT local, validar como token de Cognito
         var cognitoPrincipal = ValidateCognitoToken(token, configuration).GetAwaiter().GetResult();
         if (cognitoPrincipal != null)
         {
+            // Si el token de Cognito es válido, establecer el usuario en el contexto
             context.HttpContext.User = cognitoPrincipal;
-            if (IsUserInRole(cognitoPrincipal, RequiredRole))
+            if (IsUserAuthorized(cognitoPrincipal))
             {
                 return;
             }
         }
 
+        // Si no se puede validar el token, devolver un error 401 (No autorizado)
         context.Result = new UnauthorizedResult();
     }
 
@@ -77,6 +87,7 @@ public class CustomAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
         }
         catch
         {
+            // Si la validación falla, devolver null
             return null;
         }
     }
@@ -84,19 +95,25 @@ public class CustomAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
     private async Task<ClaimsPrincipal> ValidateCognitoToken(string token, IConfiguration configuration)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
+
+        // Obtener las claves públicas de Cognito (JWKS)
         var jwksUrl = $"https://cognito-idp.{configuration["AWS:Region"]}.amazonaws.com/{configuration["AWS:UserPoolId"]}/.well-known/jwks.json";
         var httpClient = new HttpClient();
         var jwksResponse = await httpClient.GetStringAsync(jwksUrl);
         var jwks = JsonConvert.DeserializeObject<Jwks>(jwksResponse);
 
+        // Obtener el kid (Key ID) del token
         var jwtToken = tokenHandler.ReadJwtToken(token);
         var kid = jwtToken.Header["kid"].ToString();
+
+        // Buscar la clave pública correspondiente al kid
         var key = jwks.Keys.FirstOrDefault(k => k.Kid == kid);
         if (key == null)
         {
-            return null;
+            return null; // No se encontró la clave pública
         }
 
+        // Convertir la clave pública a un formato que pueda usar JwtSecurityTokenHandler
         var rsa = key.ToRsa();
         var validationParameters = new TokenValidationParameters
         {
@@ -116,27 +133,34 @@ public class CustomAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
         }
         catch
         {
+            // Si la validación falla, devolver null
             return null;
         }
     }
 
-    private bool IsUserInRole(ClaimsPrincipal principal, string role)
+    private bool IsUserAuthorized(ClaimsPrincipal principal)
     {
-        if (principal == null || string.IsNullOrEmpty(role))
+        if (principal == null)
         {
             return false;
         }
 
+        // Si no se requiere un rol específico, cualquier usuario autenticado es autorizado
+        if (string.IsNullOrEmpty(RequiredRole))
+        {
+            return true;
+        }
+
         // Verificar si el usuario tiene el rol requerido en los claims
         var roleClaims = principal.FindAll(ClaimTypes.Role).Select(c => c.Value);
-        if (roleClaims.Contains(role))
+        if (roleClaims.Contains(RequiredRole))
         {
             return true;
         }
 
         // Verificar si el usuario pertenece al grupo de Cognito
         var cognitoGroups = principal.FindAll("cognito:groups").Select(c => c.Value);
-        return cognitoGroups.Contains(role);
+        return cognitoGroups.Contains(RequiredRole);
     }
 }
 

@@ -232,14 +232,14 @@ namespace CrombieProytecto_V0._2.Service
         }
 
         // Método para generar JWT Token
-        private string GenerateJwtToken(Usuario usuario)
+        public string GenerateJwtToken(Usuario usuario)
         {
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-            new Claim(ClaimTypes.Email, usuario.Email),
-            new Claim(ClaimTypes.Role, usuario.Roles.ToString())
-        };
+                new Claim(ClaimTypes.Email, usuario.Email),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim(ClaimTypes.Role, usuario.Roles == UserRole.Admin ? "Admin" : "Regular")
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -248,8 +248,9 @@ namespace CrombieProytecto_V0._2.Service
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds);
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

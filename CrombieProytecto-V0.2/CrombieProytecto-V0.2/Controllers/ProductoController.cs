@@ -44,7 +44,8 @@ namespace CrombieProytecto_V0._2.Controllers
 
         // Agrega un nuevo producto
         [HttpPost("AddProduct")]
-        
+        [CustomAuthorize(RequiredRole = "Admin")]
+
         public async Task<ActionResult<ProductoDto>> CreateProduct(
             [FromForm] CrearProductoDto createDto, // Recibe datos del producto
             [FromForm] IFormFile imagen)           // Recibe el archivo de imagen
@@ -58,7 +59,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
         // Modifica un producto existente
         [HttpPut("Eddit-Producto{id}")]
-        [Authorize(Roles = "Admin")]
+        [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> UpdateProduct(
             int id,
             [FromForm] CrearProductoDto updateDto, // Datos actualizados
@@ -73,7 +74,7 @@ namespace CrombieProytecto_V0._2.Controllers
 
         //Elimina un producto existente
         [HttpDelete("DeleteProduct{id}")]
-        //[Authorize(Roles = "Admin")]
+        [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var result = await _productoService.DeleteProductAsync(id);

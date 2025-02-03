@@ -10,8 +10,8 @@ namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [CustomAuthorize]
-    //[Authorize(Roles = "Admin")]
+    [CustomAuthorize(RequiredRole = "Admin")]
+    //[CustomAuthorize(RequiredRole = "Admin")]
     public class S3Controller : ControllerBase
     {
         private readonly S3Service _s3Service;
