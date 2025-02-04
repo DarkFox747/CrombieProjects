@@ -4,6 +4,7 @@ using CrombieProytecto_V0._2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrombieProytecto_V0._2.Migrations
 {
     [DbContext(typeof(ProyectContext))]
-    partial class ProyectContextModelSnapshot : ModelSnapshot
+    [Migration("20250204021652_FixCategoriaId")]
+    partial class FixCategoriaId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,25 +127,25 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7260),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8264),
                             Nombre = "Electrónica"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7264),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8266),
                             Nombre = "Ropa"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7265),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8267),
                             Nombre = "Hogar"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7266),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8268),
                             Nombre = "Juguetes"
                         });
                 });
@@ -188,7 +191,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7163),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8178),
                             Descripcion = "Laptop gaming de alta gama con RTX 3080",
                             Nombre = "Laptop Gaming Pro",
                             Precio = 1499.99m,
@@ -197,7 +200,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7166),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8181),
                             Descripcion = "Smartphone de última generación con cámara 108MP",
                             Nombre = "Smartphone Ultra",
                             Precio = 899.99m,
@@ -206,7 +209,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7169),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8183),
                             Descripcion = "Auriculares bluetooth con cancelación de ruido",
                             Nombre = "Auriculares Wireless",
                             Precio = 199.99m,
@@ -215,7 +218,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7171),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8184),
                             Descripcion = "Monitor gaming 4K 144Hz",
                             Nombre = "Monitor 4K",
                             Precio = 499.99m,
@@ -224,7 +227,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7174),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8186),
                             Descripcion = "Teclado gaming con switches Cherry MX",
                             Nombre = "Teclado Mecánico RGB",
                             Precio = 129.99m,
@@ -343,7 +346,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(6973),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8003),
                             Email = "admin@example.com",
                             Nombre = "Admin",
                             PasswordHash = "Ru5l7/9VNQ1CgSzIZg5na0WWm+sZewJpWPBkBf+1RvA=",
@@ -354,7 +357,7 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(6975),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8006),
                             Email = "user@example.com",
                             Nombre = "User",
                             PasswordHash = "Qmd4q0uhgOtcKfXPg/FIfcLbz855lv98RXbtH7GUbTA=",
@@ -395,14 +398,14 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7430),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8418),
                             IdUsuario = 2,
                             Nombre = "Mi Setup Gaming"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7432),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8420),
                             IdUsuario = 2,
                             Nombre = "Tecnología Móvil"
                         });
@@ -440,35 +443,35 @@ namespace CrombieProytecto_V0._2.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7508),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8494),
                             IdProducto = 1,
                             IdWishList = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7510),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8496),
                             IdProducto = 4,
                             IdWishList = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7511),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8497),
                             IdProducto = 5,
                             IdWishList = 1
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7512),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8498),
                             IdProducto = 2,
                             IdWishList = 2
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 2, 4, 2, 23, 45, 970, DateTimeKind.Utc).AddTicks(7513),
+                            CreatedAt = new DateTime(2025, 2, 4, 2, 16, 51, 995, DateTimeKind.Utc).AddTicks(8499),
                             IdProducto = 3,
                             IdWishList = 2
                         });

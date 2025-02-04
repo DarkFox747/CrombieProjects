@@ -61,6 +61,19 @@ namespace CrombieProytecto_V0._2.Controllers
             return Ok(compra);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<CompraDto>>> GetHistorialCompras(int id)
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+            if (usuario == null)
+            {
+                return Unauthorized("No se encontró el usuario en la base de datos.");
+            }
+
+            var historialCompras = await _compraService.GetHistorialComprasAsync(usuario.Id);
+            return Ok(historialCompras);
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<CompraDto>>> GetHistorialCompras()
         {

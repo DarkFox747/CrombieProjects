@@ -61,6 +61,26 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         [HttpDelete]
+        [HttpDelete("{productoId}")]
+        public async Task<IActionResult> RemoveProductoFromCarrito(int productoId)
+        {
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("No se pudo obtener el email del usuario.");
+            }
+
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+            if (usuario == null)
+            {
+                return Unauthorized("No se encontró el usuario en la base de datos.");
+            }
+
+            await _carritoService.RemoveProductoFromCarritoAsync(usuario.Id, productoId);
+            return NoContent();
+        }
+
+        [HttpDelete]
         public async Task<IActionResult> ClearCarrito()
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;

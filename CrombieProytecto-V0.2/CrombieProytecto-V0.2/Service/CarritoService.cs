@@ -79,4 +79,20 @@ public class CarritoService
             await _context.SaveChangesAsync();
         }
     }
+    public async Task RemoveProductoFromCarritoAsync(int usuarioId, int productoId)
+    {
+        var carrito = await _context.Carritos
+            .Include(c => c.Productos)
+            .FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
+
+        if (carrito != null)
+        {
+            var carritoProducto = carrito.Productos.FirstOrDefault(cp => cp.ProductoId == productoId);
+            if (carritoProducto != null)
+            {
+                carrito.Productos.Remove(carritoProducto);
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
 }

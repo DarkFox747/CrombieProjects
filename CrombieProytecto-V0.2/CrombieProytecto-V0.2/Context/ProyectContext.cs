@@ -69,6 +69,12 @@ namespace CrombieProytecto_V0._2.Context
                       .HasForeignKey(wi => wi.IdProducto)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            // Categoria Configuration
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Nombre).IsRequired().HasMaxLength(100);
+            });
 
             //categoria y productocategoria
             modelBuilder.Entity<ProductoCategoria>()

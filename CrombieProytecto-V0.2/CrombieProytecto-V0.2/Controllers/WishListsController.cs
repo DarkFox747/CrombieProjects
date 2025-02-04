@@ -59,13 +59,12 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Crea nueva wishlist
-        [HttpPost("{nombre}")]
-        public async Task<ActionResult<WishListDto>> CreateWishList(string nombre)
+        [HttpPost]
+        public async Task<ActionResult<WishListDto>> CreateWishList([FromBody] CrearWishListDto createDto)
         {
             try
             {
                 var userId = await GetUserId(); // Llamada asíncrona
-                var createDto = new CrearWishListDto { Nombre = nombre };
                 var wishList = await _wishListService.CreateWishListAsync(createDto, userId);
                 return CreatedAtAction(nameof(GetWishList), new { id = wishList.Id }, wishList);
             }
@@ -76,13 +75,13 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Agrega producto a wishlist existente
-        [HttpPost("{wishListId}")]
-        public async Task<ActionResult<WishListDto>> AddProductToWishList(int wishListId, int productId)
+        [HttpPost("add-product")]
+        public async Task<ActionResult<WishListDto>> AddProductToWishList([FromBody] AddRemoveProductDto dto)
         {
             try
             {
                 var userId = await GetUserId(); // Llamada asíncrona
-                var wishList = await _wishListService.AddProductToWishListAsync(wishListId, productId, userId);
+                var wishList = await _wishListService.AddProductToWishListAsync(dto.WishListId, dto.ProductId, userId);
                 return Ok(wishList);
             }
             catch (Exception ex)
@@ -92,13 +91,13 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Elimina producto de wishlist existente
-        [HttpDelete("{wishListId}/remove-product/{productId}")]
-        public async Task<ActionResult<WishListDto>> RemoveProductFromWishList(int wishListId, int productId)
+        [HttpDelete("remove-product")]
+        public async Task<ActionResult<WishListDto>> RemoveProductFromWishList([FromBody] AddRemoveProductDto dto)
         {
             try
             {
                 var userId = await GetUserId(); // Llamada asíncrona
-                var wishList = await _wishListService.RemoveProductFromWishListAsync(wishListId, productId, userId);
+                var wishList = await _wishListService.RemoveProductFromWishListAsync(dto.WishListId, dto.ProductId, userId);
 
                 if (wishList == null)
                     return NotFound();
@@ -124,6 +123,46 @@ namespace CrombieProytecto_V0._2.Controllers
                     return NotFound();
 
                 return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // Obtiene todas las wishlists de un usuario por ID
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<WishListDto>>> GetWishListsByUserId(int userId)
+        {
+            try
+            {
+                var wishLists = await _wishListService.GetWishListsAsync(userId);
+                return Ok(wishLists);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // Obtiene todas las wishlists creadas con información resumida
+        [HttpGet("all-Wishlist")]
+        public async Task<ActionResult<IEnumerable<WishListSummaryDto>>> GetAllWishListSummaries()
+        {
+            try
+            {
+                var wishLists = await _context.WishList
+                    .Include(w => w.Usuario)
+                    .Select(w => new WishListSummaryDto
+                    {
+                        WishListId = w.Id,
+                        WishListNombre = w.Nombre,
+                        UsuarioId = w.IdUsuario,
+                        UsuarioNombre = w.Usuario.Nombre
+                    })
+                    .ToListAsync();
+
+                return Ok(wishLists);
             }
             catch (Exception ex)
             {

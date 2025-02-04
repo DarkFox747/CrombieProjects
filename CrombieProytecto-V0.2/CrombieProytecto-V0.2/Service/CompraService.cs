@@ -61,4 +61,28 @@ public class CompraService
             }).ToList()
         }).ToList();
     }
+
+    public async Task<CompraDto> GetCompraAsync(int usuarioId, int compraId)
+    {
+        var compra = await _context.Compras
+            .Include(c => c.Productos)
+            .ThenInclude(cp => cp.Producto)
+            .FirstOrDefaultAsync(c => c.UsuarioId == usuarioId && c.Id == compraId);
+        if (compra == null)
+        {
+            return null;
+        }
+        return new CompraDto
+        {
+            Id = compra.Id,
+            UsuarioId = compra.UsuarioId,
+            FechaCompra = compra.FechaCompra,
+            Productos = compra.Productos.Select(cp => new CompraProductoDto
+            {
+                ProductoId = cp.ProductoId,
+                NombreProducto = cp.Producto.Nombre,
+                Cantidad = cp.Cantidad
+            }).ToList()
+        };
+    }
 }
