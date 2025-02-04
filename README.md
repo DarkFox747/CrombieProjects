@@ -8,9 +8,14 @@ Este repositorio contiene una API desarrollada en .NET que utiliza una base de d
 
 ## 📸 Imágenes del Proyecto
 
-![image](https://github.com/user-attachments/assets/def56d5c-4322-4cf5-a958-8c8255c5a472)
+### Diagrama de la DB: 
 
-![image](https://github.com/user-attachments/assets/22010a1d-426f-4bf8-a23a-25f0f3b4381b)
+![image](https://github.com/user-attachments/assets/12105db6-e254-4ae5-a733-fb4b26c5efcf)
+
+### Esquema del proyecto:
+
+![image](https://github.com/user-attachments/assets/983f91cc-d8a9-4697-8fc6-b9612b806ffd)
+
 
 ---
 
