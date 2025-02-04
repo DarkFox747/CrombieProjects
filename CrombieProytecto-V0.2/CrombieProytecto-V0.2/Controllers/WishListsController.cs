@@ -23,7 +23,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Obtiene todas las wishlists
-        [HttpGet("Get de todas las wishlist")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<WishListDto>>> GetWishLists()
         {
             try
@@ -39,7 +39,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Obtiene wishlist por ID
-        [HttpGet("Get wishlist por:{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<WishListDto>> GetWishList(int id)
         {
             try
@@ -59,7 +59,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Crea nueva wishlist
-        [HttpPost("Crear Wishlist por nombre:{nombre}")]
+        [HttpPost("{nombre}")]
         public async Task<ActionResult<WishListDto>> CreateWishList(string nombre)
         {
             try
@@ -76,7 +76,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Agrega producto a wishlist existente
-        [HttpPost("Agregar un producto a al wishlist{wishListId}")]
+        [HttpPost("{wishListId}")]
         public async Task<ActionResult<WishListDto>> AddProductToWishList(int wishListId, int productId)
         {
             try
@@ -92,7 +92,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Elimina producto de wishlist existente
-        [HttpDelete(template: "Eliminar un producto de la wishlist por id:{wishListId}/remove-product/{productId}")]
+        [HttpDelete("{wishListId}/remove-product/{productId}")]
         public async Task<ActionResult<WishListDto>> RemoveProductFromWishList(int wishListId, int productId)
         {
             try
@@ -112,7 +112,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Elimina wishlist por ID
-        [HttpDelete("Eliminar una wishlist por id:{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWishList(int id)
         {
             try

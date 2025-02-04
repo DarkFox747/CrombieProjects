@@ -39,7 +39,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
         //Crea una nueva categoría
         [HttpPost]
-        
+        [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<ActionResult<CategoriaDto>> CreateCategoria(CategoriaDto createDto)
         {
             var categoria = await _categoriaService.CreateCategoriaAsync(createDto);
@@ -47,7 +47,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
         //Actualiza una categoría existente
         [HttpPut("{id}")]
-        
+        [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> UpdateCategoria(int id, CategoriaDto updateDto)
         {
             var success = await _categoriaService.UpdateCategoriaAsync(id, updateDto);
@@ -58,7 +58,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
         //Elimina una categoría existente
         [HttpDelete("{id}")]
-        
+        [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> DeleteCategoria(int id)
         {
             var success = await _categoriaService.DeleteCategoriaAsync(id);

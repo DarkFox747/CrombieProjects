@@ -11,7 +11,7 @@ namespace CrombieProytecto_V0._2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [CustomAuthorize]
+    
     public class ProductoController : ControllerBase
     {
         private readonly ProductoService _productoService;
@@ -22,8 +22,8 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Obtiene todos los productos con paginación
-        [HttpGet("Get-All")]
-        [AllowAnonymous]
+        [HttpGet]
+        
         public async Task<ActionResult<PaginatedResult<ProductoDto>>> GetProducts([FromQuery] PaginationParameters paginationParameters)
         {
             var productos = await _productoService.GetProductsAsync(paginationParameters);
@@ -31,8 +31,8 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Obtiene un producto por ID
-        [HttpGet("Get-id{id}")]
-        [AllowAnonymous]
+        [HttpGet("{id}")]
+        
         public async Task<ActionResult<ProductoDto>> GetProduct(int id)
         {
             var producto = await _productoService.GetProductAsync(id);
@@ -43,7 +43,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Agrega un nuevo producto
-        [HttpPost("AddProduct")]
+        [HttpPost]
         [CustomAuthorize(RequiredRole = "Admin")]
 
         public async Task<ActionResult<ProductoDto>> CreateProduct(
@@ -58,7 +58,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         // Modifica un producto existente
-        [HttpPut("Eddit-Producto{id}")]
+        [HttpPut("{id}")]
         [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> UpdateProduct(
             int id,
@@ -73,7 +73,7 @@ namespace CrombieProytecto_V0._2.Controllers
         }
 
         //Elimina un producto existente
-        [HttpDelete("DeleteProduct{id}")]
+        [HttpDelete("{id}")]
         [CustomAuthorize(RequiredRole = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
